@@ -4,6 +4,13 @@ Laravel RBAC package
 1 Introduction
 ----------------------------
 
+[![Latest Stable Version](https://poser.pugx.org/itstructure/laravel-rbac/v/stable)](https://packagist.org/packages/itstructure/laravel-rbac)
+[![Latest Unstable Version](https://poser.pugx.org/itstructure/laravel-rbac/v/unstable)](https://packagist.org/packages/itstructure/laravel-rbac)
+[![License](https://poser.pugx.org/itstructure/laravel-rbac/license)](https://packagist.org/packages/itstructure/laravel-rbac)
+[![Total Downloads](https://poser.pugx.org/itstructure/laravel-rbac/downloads)](https://packagist.org/packages/itstructure/laravel-rbac)
+[![Build Status](https://scrutinizer-ci.com/g/itstructure/laravel-rbac/badges/build.png?b=master)](https://scrutinizer-ci.com/g/itstructure/laravel-rbac/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/itstructure/laravel-rbac/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/itstructure/laravel-rbac/?branch=master)
+
 **LaRbac** -- Package for the Laravel 5 framework with [AdminLTE](https://github.com/jeroennoten/Laravel-AdminLTE) template, which provides management with the next data:
 - Roles
 - Permissions
