@@ -1,6 +1,8 @@
 <?php
 namespace Itstructure\LaRbac\Models;
 
+use Itstructure\LaRbac\Contracts\User as RbacUserContract;
+
 /**
  * Class Administrable
  *
@@ -14,6 +16,11 @@ trait Administrable
      * @var array
      */
     private $_roles;
+
+    /**
+     * @var int|null
+     */
+    private $_countAdministrativeRoles;
 
     /**
      * User identifier.
@@ -86,6 +93,31 @@ trait Administrable
     }
 
     /**
+     * @param RbacUserContract $member
+     * @param Role $role
+     * @return bool
+     */
+    public function canAssignRole(RbacUserContract $member, Role $role): bool
+    {
+        if ($this->countAdministrativeRoles() == 0) {
+            return false;
+        }
+        if ($this->getIdAttribute() != $member->getIdAttribute()) {
+            return true;
+        }
+        if ($this->countAdministrativeRoles() > 1) {
+            return true;
+        }
+        if (!$role->hasAccess([Permission::ADMIN_PERMISSION])) {
+            return true;
+        }
+        if ($this->inRole($role->slug)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Synchronize user roles after save model.
      *
      * @param array $options
@@ -102,5 +134,26 @@ trait Administrable
         }
 
         return true;
+    }
+
+    /**
+     * @return int
+     */
+    private function countAdministrativeRoles(): int
+    {
+        if (null !== $this->_countAdministrativeRoles) {
+            return $this->_countAdministrativeRoles;
+        }
+
+        $this->_countAdministrativeRoles = 0;
+
+        /* @var Role $role */
+        foreach ($this->roles as $role) {
+            if($role->hasAccess([Permission::ADMIN_PERMISSION])) {
+                $this->_countAdministrativeRoles += 1;
+            }
+        }
+
+        return $this->_countAdministrativeRoles;
     }
 }

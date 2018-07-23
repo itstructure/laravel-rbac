@@ -78,7 +78,7 @@ class AdminCommand extends Command
             return false;
         }
 
-        $adminRoleId = Role::where('slug', 'admin')->firstOrFail()->id;
+        $adminRoleId = Role::where('slug', Role::ADMIN_ROLE)->firstOrFail()->id;
 
         $adminUser->roles()->attach([
             $adminRoleId

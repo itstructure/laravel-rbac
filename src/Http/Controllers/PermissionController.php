@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Config;
 use Itstructure\LaRbac\Models\Permission;
 use Itstructure\LaRbac\Http\Requests\{
     StorePermission as StorePermissionRequest,
-    UpdatePermission as UpdatePermissionRequest
+    UpdatePermission as UpdatePermissionRequest,
+    Delete as DeletePermissionRequest
 };
 use App\Http\Controllers\Controller;
 
@@ -83,10 +84,10 @@ class PermissionController extends Controller
     /**
      * Render page to show current permission.
      *
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(int $id)
     {
         $permission = Permission::findOrFail($id);
 
@@ -96,12 +97,18 @@ class PermissionController extends Controller
     /**
      * Delete current permission data.
      *
-     * @param Permission $permission
+     * @param DeletePermissionRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(Permission $permission)
+    public function delete(DeletePermissionRequest $request)
     {
-        $permission->delete();
+        foreach ($request->items as $item) {
+            if (!is_numeric($item)) {
+                continue;
+            }
+
+            Permission::destroy($item);
+        }
 
         return redirect()->route('list_permissions');
     }

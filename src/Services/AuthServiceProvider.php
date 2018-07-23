@@ -3,6 +3,7 @@ namespace Itstructure\LaRbac\Services;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Itstructure\LaRbac\Models\Permission;
 use Itstructure\LaRbac\Contracts\{
     User as RbacUserContract,
     Model as RbacModelContract
@@ -40,7 +41,11 @@ class AuthServiceProvider extends ServiceProvider
     public function registerRbacPolicies()
     {
         Gate::define('administrate', function (RbacUserContract $user) {
-            return $user->hasAccess(['administrate']);
+            return $user->hasAccess([Permission::ADMIN_PERMISSION]);
+        });
+
+        Gate::define('delete-yourself', function (RbacUserContract $user, int $memberId) {
+            return $user->getIdAttribute() != $memberId;
         });
 
         Gate::define('view-record', function (RbacUserContract $user) {

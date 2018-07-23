@@ -1,6 +1,7 @@
 <?php
 
 use \Illuminate\Support\Facades\Route;
+use Itstructure\LaRbac\Models\Permission;
 
 /*
  * RBAC admin section
@@ -9,7 +10,7 @@ Route::group([
         'prefix' => 'rbac',
         'middleware' => [
             'auth',
-            'can:administrate'
+            'can:'.Permission::ADMIN_PERMISSION
         ]
     ], function () {
 
@@ -34,7 +35,7 @@ Route::group([
         Route::post('/update/{role}', 'RoleController@update')
             ->name('update_role');
 
-        Route::post('/delete/{role}', 'RoleController@delete')
+        Route::post('/delete', 'RoleController@delete')
             ->name('delete_role');
     });
 
@@ -59,7 +60,7 @@ Route::group([
         Route::post('/update/{permission}', 'PermissionController@update')
             ->name('update_permission');
 
-        Route::post('/delete/{permission}', 'PermissionController@delete')
+        Route::post('/delete', 'PermissionController@delete')
             ->name('delete_permission');
     });
 
@@ -78,7 +79,7 @@ Route::group([
         Route::post('/update/{id}', 'UserController@update')
             ->name('update_user');
 
-        Route::post('/delete/{id}', 'UserController@delete')
+        Route::post('/delete', 'UserController@delete')
             ->name('delete_user');
     });
 });

@@ -17,7 +17,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $totalPermissionId   = Permission::where('slug', 'administrate')->firstOrFail()->id;
+        $totalPermissionId   = Permission::where('slug', Permission::ADMIN_PERMISSION)->firstOrFail()->id;
         $viewPermissionId    = Permission::where('slug', 'view-record')->firstOrFail()->id;
         $createPermissionId  = Permission::where('slug', 'create-record')->firstOrFail()->id;
         $updatePermissionId  = Permission::where('slug', 'update-record')->firstOrFail()->id;
@@ -25,8 +25,8 @@ class RoleSeeder extends Seeder
         $publishPermissionId = Permission::where('slug', 'publish-record')->firstOrFail()->id;
 
         $this->createRecord(
-            'Admin',
-            'admin',
+            ucfirst(Role::ADMIN_ROLE),
+            Role::ADMIN_ROLE,
             'Administrator',
             [
                 $totalPermissionId, $viewPermissionId, $createPermissionId, $updatePermissionId, $deletePermissionId, $publishPermissionId

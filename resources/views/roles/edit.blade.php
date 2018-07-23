@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-4">
 
-                    <h1>Edit Role</h1>
+                    <h1>Edit role: {{ $role->name }}</h1>
 
                     <form action="{{ route('update_role', ['role' => $role->id]) }}" method="post">
 

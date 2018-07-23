@@ -18,8 +18,8 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $this->createRecord(
-            'Administrate',
-            'administrate',
+            ucfirst(Permission::ADMIN_PERMISSION),
+            Permission::ADMIN_PERMISSION,
             'Total administrate of users and content'
         );
 

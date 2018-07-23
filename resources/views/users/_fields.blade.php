@@ -7,8 +7,10 @@
 
     <div class="container">
         <div class="row">
-            @foreach($allRoles as $id => $name)
-                <input type="checkbox" name="roles[]" value="{{ $id }}" @if(isset($currentRoles) && in_array($id, $currentRoles)) checked @endif >{{ $name }}<br>
+            @foreach($allRoles as $role)
+                <input type="checkbox" name="roles[]" value="{{ $role->id }}"
+                       @if(!Auth::user()->canAssignRole($user, $role)) onclick="window.event.returnValue=false" @endif
+                       @if(isset($currentRoles) && in_array($role->id, $currentRoles)) checked @endif >{{ $role->name }}<br>
             @endforeach
         </div>
     </div>

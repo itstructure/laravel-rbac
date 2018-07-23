@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-4">
 
-                    <h1>Create Permission</h1>
+                    <h1>Create permission</h1>
 
                     <form action="{{ route('store_permission') }}" method="post">
 

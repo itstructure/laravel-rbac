@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-4">
 
-                    <h1>Create Role</h1>
+                    <h1>Create role</h1>
 
                     <form action="{{ route('store_role') }}" method="post">
 

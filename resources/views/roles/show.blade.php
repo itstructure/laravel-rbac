@@ -5,9 +5,15 @@
     <section class="content container-fluid">
         <div class="role-show">
 
+            <h1>Show role: {{ $role->name }}</h1>
+
             <p>
-                <a class="btn btn-success" href="{{ route('edit_role', ['id' => $role->id]) }}" title="Edit" aria-label="Edit" data-pjax="0">Edit role</a>
-                <a class="btn btn-danger" href="{{ route('delete_role', ['id' => $role->id]) }}" title="Delete" aria-label="Delete" data-confirm="Are you sure you want to delete this item?" data-method="post">Delete role</a>
+                <form action="{{ route('delete_role') }}" method="post">
+                    <a class="btn btn-success" href="{{ route('edit_role', ['role' => $role->id]) }}" title="Edit">Edit role</a>
+                    <input type="submit" class="btn btn-danger" value="Delete role" title="Delete" onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
+                    <input type="hidden" value="{{ $role->id }}" name="items[]">
+                    <input type="hidden" value="{!! csrf_token() !!}" name="_token">
+                </form>
             </p>
 
             <table class="table table-striped table-bordered">

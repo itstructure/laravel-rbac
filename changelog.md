@@ -1,5 +1,10 @@
 ### CHANGE LOG:
 
+**1.1.0 July 23, 2018:**
+- Modify delete items
+- Protect self user delete
+- Protect role assign
+
 **1.0.0 July 22, 2018:**
 - Create package, which provides management with the next data:
     - Roles

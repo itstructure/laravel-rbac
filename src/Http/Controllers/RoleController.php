@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Config;
 use Itstructure\LaRbac\Models\{Role, Permission};
 use Itstructure\LaRbac\Http\Requests\{
     StoreRole as StoreRoleRequest,
-    UpdateRole as UpdateRoleRequest
+    UpdateRole as UpdateRoleRequest,
+    Delete as DeleteRoleRequest
 };
 use App\Http\Controllers\Controller;
 
@@ -64,7 +65,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $allPermissions = Permission::orderBy('id', 'desc')->pluck('name', 'id');
-        $currentPermissions = old('permissions') ? old('permissions') : $role->permissions()->pluck('id')->toArray();
+        $currentPermissions = old('permissions') ?? $role->permissions()->pluck('id')->toArray();
 
         return view('rbac::roles.edit', compact('role', 'allPermissions', 'currentPermissions'));
     }
@@ -88,10 +89,10 @@ class RoleController extends Controller
     /**
      * Render page to show current role.
      *
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(int $id)
     {
         $role = Role::findOrFail($id);
 
@@ -101,12 +102,18 @@ class RoleController extends Controller
     /**
      * Delete current role data.
      *
-     * @param Role $role
+     * @param DeleteRoleRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(Role $role)
+    public function delete(DeleteRoleRequest $request)
     {
-        $role->delete();
+        foreach ($request->items as $item) {
+            if (!is_numeric($item)) {
+                continue;
+            }
+
+            Role::destroy($item);
+        }
 
         return redirect()->route('list_roles');
     }

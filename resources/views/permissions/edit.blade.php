@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-4">
 
-                    <h1>Edit Permission</h1>
+                    <h1>Edit permission: {{ $permission->name }}</h1>
 
                     <form action="{{ route('update_permission', ['permission' => $permission->id]) }}" method="post">
 

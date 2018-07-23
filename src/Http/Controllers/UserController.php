@@ -2,10 +2,13 @@
 namespace Itstructure\LaRbac\Http\Controllers;
 
 use Illuminate\Support\Facades\Config;
-use App\Http\Controllers\Controller;
-use Itstructure\LaRbac\Http\Requests\UpdateUser as UpdateUserRequest;
 use Itstructure\LaRbac\Helpers\Helper;
 use Itstructure\LaRbac\Models\Role;
+use Itstructure\LaRbac\Http\Requests\{
+    UpdateUser as UpdateUserRequest,
+    Delete as DeleteUserRequest
+};
+use App\Http\Controllers\Controller;
 
 /**
  * Class UserController
@@ -56,8 +59,8 @@ class UserController extends Controller
     {
         $user = $this->findOrFail($id);
 
-        $allRoles = Role::orderBy('id', 'desc')->pluck('name', 'id');
-        $currentRoles = old('roles') ? old('roles') : $user->roles->pluck('id')->toArray();
+        $allRoles = Role::orderBy('id', 'desc')->get();
+        $currentRoles = old('roles') ?? $user->roles->pluck('id')->toArray();
 
         return view('rbac::users.edit', compact('user', 'allRoles', 'currentRoles'));
     }
@@ -75,18 +78,16 @@ class UserController extends Controller
             ->fill($request->all())
             ->save();
 
-        return redirect()->route('show_user', [
-            'id' => $id
-        ]);
+        return redirect()->route('show_user', compact('id'));
     }
 
     /**
      * Render page to show current user.
      *
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(int $id)
     {
         $user = $this->findOrFail($id);
 
@@ -96,12 +97,21 @@ class UserController extends Controller
     /**
      * Delete current user data.
      *
-     * @param int $id
+     * @param DeleteUserRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(int $id)
+    public function delete(DeleteUserRequest $request)
     {
-        $this->findOrFail($id)->delete();
+        foreach ($request->items as $item) {
+            if (!is_numeric($item) || $request->user()->id == $item) {
+                continue;
+            }
+
+            call_user_func([
+                $this->userModelClass,
+                'destroy',
+            ], $item);
+        }
 
         return redirect()->route('list_users');
     }

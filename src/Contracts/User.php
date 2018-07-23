@@ -1,13 +1,16 @@
 <?php
 namespace Itstructure\LaRbac\Contracts;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Itstructure\LaRbac\Models\Role;
+
 /**
  * Interface User
  *
  * @package Itstructure\LaRbac\Contracts
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
-interface User
+interface User extends Authenticatable
 {
     /**
      * User identifier.
@@ -53,4 +56,11 @@ interface User
      * @return bool
      */
     public function inRole(string $roleSlug): bool;
+
+    /**
+     * @param User $member
+     * @param Role $role
+     * @return bool
+     */
+    public function canAssignRole(self $member, Role $role): bool;
 }

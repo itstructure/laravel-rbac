@@ -5,14 +5,18 @@
     <section class="content container-fluid">
         <div class="user-index">
 
-            <table class="table table-striped table-bordered"><thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Roles</th>
-                    <th class="action-column">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
+            <h1>List users</h1>
+
+            <form action="{{ route('delete_user') }}" method="post">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Roles</th>
+                            <th class="action-column">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     @foreach($users as $user)
                         <tr>
                             <td>
@@ -30,14 +34,24 @@
                                 <a href="{{ route('edit_user', ['id' => $user->id]) }}" title="Edit" aria-label="Edit">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
-                                <a href="{{ route('delete_user', ['id' => $user->id]) }}" title="Delete" aria-label="Delete" data-confirm="Are you sure you want to delete this item?" data-method="post">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </a>
+                                @can('delete-yourself', $user->id)
+                                    <input type="checkbox" name="items[]" value="{{ $user->id }}">
+                                @else
+                                    <span class="glyphicon glyphicon-ban-circle"></span>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+                @if ($errors->has('items'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('items') }}</strong>
+                    </span>
+                @endif
+                <input type="submit" class="btn btn-danger" value="Delete selected" title="Delete" onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
+                <input type="hidden" value="{!! csrf_token() !!}" name="_token">
+            </form>
 
             {{ $users->links() }}
 

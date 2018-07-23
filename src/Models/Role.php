@@ -13,6 +13,8 @@ use Itstructure\LaRbac\Helpers\Helper;
  */
 class Role extends Model
 {
+    const ADMIN_ROLE = 'admin';
+
     /**
      * @var array
      */

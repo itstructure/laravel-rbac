@@ -47,6 +47,10 @@ class CreateUserRoleTable extends Migration
 
         $userModelKeyName = $userModel->getKeyName();
 
+        if ($userModelKeyName !== 'id') {
+            throw new InvalidConfigException('User Model keyName must be id.');
+        }
+
         $userModelTable = $userModel->getTable();
 
         Schema::create('user_role', function (Blueprint $table) use ($userModelKeyName, $userModelTable) {
