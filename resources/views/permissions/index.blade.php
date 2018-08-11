@@ -22,7 +22,9 @@
                         @foreach($permissions as $permission)
                             <tr>
                                 <td>
-                                    <a href="{{ route('show_permission', ['id' => $permission->id]) }}">{{ $permission->name }}</a>
+                                    <a href="{{ route('show_permission', ['id' => $permission->id]) }}">
+                                        {{ $permission->name }}
+                                    </a>
                                 </td>
                                 <td>
                                     {{ $permission->slug }}
@@ -31,10 +33,12 @@
                                     {{ $permission->description }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('show_permission', ['id' => $permission->id]) }}" title="View" aria-label="View">
+                                    <a href="{{ route('show_permission', ['id' => $permission->id]) }}"
+                                       title="View" aria-label="View">
                                         <span class="glyphicon glyphicon-eye-open"></span>
                                     </a>
-                                    <a href="{{ route('edit_permission', ['permission' => $permission->id]) }}" title="Edit" aria-label="Edit">
+                                    <a href="{{ route('edit_permission', ['permission' => $permission->id]) }}"
+                                       title="Edit" aria-label="Edit">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </a>
                                     <input type="checkbox" name="items[]" value="{{ $permission->id }}">
@@ -48,7 +52,8 @@
                         <strong>{{ $errors->first('items') }}</strong>
                     </span>
                 @endif
-                <input type="submit" class="btn btn-danger" value="Delete selected" title="Delete" onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
+                <input type="submit" class="btn btn-danger" value="Delete selected" title="Delete"
+                       onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
                 <input type="hidden" value="{!! csrf_token() !!}" name="_token">
             </form>
 

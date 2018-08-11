@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Http\Controllers;
 
 use Illuminate\Support\Facades\Config;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Controller;
  * Class PermissionController
  *
  * @package Itstructure\LaRbac\Http\Controllers
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class PermissionController extends Controller
@@ -45,6 +47,7 @@ class PermissionController extends Controller
      * Store new permission data.
      *
      * @param StorePermissionRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StorePermissionRequest $request)
@@ -58,6 +61,7 @@ class PermissionController extends Controller
      * Render page to edit current permission.
      *
      * @param Permission $permission
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Permission $permission)
@@ -70,6 +74,7 @@ class PermissionController extends Controller
      *
      * @param Permission $permission
      * @param UpdatePermissionRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Permission $permission, UpdatePermissionRequest $request)
@@ -85,6 +90,7 @@ class PermissionController extends Controller
      * Render page to show current permission.
      *
      * @param int $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(int $id)
@@ -98,11 +104,13 @@ class PermissionController extends Controller
      * Delete current permission data.
      *
      * @param DeletePermissionRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(DeletePermissionRequest $request)
     {
         foreach ($request->items as $item) {
+
             if (!is_numeric($item)) {
                 continue;
             }

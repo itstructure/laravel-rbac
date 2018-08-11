@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Http\Controllers;
 
 use Illuminate\Support\Facades\Config;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Controller;
  * Class RoleController
  *
  * @package Itstructure\LaRbac\Http\Controllers
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class RoleController extends Controller
@@ -47,6 +49,7 @@ class RoleController extends Controller
      * Store new role data.
      *
      * @param StoreRoleRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreRoleRequest $request)
@@ -60,6 +63,7 @@ class RoleController extends Controller
      * Render page to edit current role.
      *
      * @param Role $role
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Role $role)
@@ -75,6 +79,7 @@ class RoleController extends Controller
      *
      * @param Role $role
      * @param UpdateRoleRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Role $role, UpdateRoleRequest $request)
@@ -90,6 +95,7 @@ class RoleController extends Controller
      * Render page to show current role.
      *
      * @param int $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(int $id)
@@ -103,11 +109,13 @@ class RoleController extends Controller
      * Delete current role data.
      *
      * @param DeleteRoleRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(DeleteRoleRequest $request)
     {
         foreach ($request->items as $item) {
+
             if (!is_numeric($item)) {
                 continue;
             }

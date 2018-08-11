@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Commands;
 
 use Illuminate\Console\Command;
@@ -9,6 +10,7 @@ use Itstructure\LaRbac\Helpers\Helper;
  * Class AdminCommand
  *
  * @package Itstructure\LaRbac\Commands
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class AdminCommand extends Command

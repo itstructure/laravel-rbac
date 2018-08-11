@@ -29,7 +29,12 @@ class RoleSeeder extends Seeder
             Role::ADMIN_ROLE,
             'Administrator',
             [
-                $totalPermissionId, $viewPermissionId, $createPermissionId, $updatePermissionId, $deletePermissionId, $publishPermissionId
+                $totalPermissionId,
+                $viewPermissionId,
+                $createPermissionId,
+                $updatePermissionId,
+                $deletePermissionId,
+                $publishPermissionId
             ]
         );
 
@@ -38,7 +43,11 @@ class RoleSeeder extends Seeder
             'editor',
             'Post editor',
             [
-                $viewPermissionId, $createPermissionId, $updatePermissionId, $deletePermissionId, $publishPermissionId
+                $viewPermissionId,
+                $createPermissionId,
+                $updatePermissionId,
+                $deletePermissionId,
+                $publishPermissionId
             ]
         );
 
@@ -47,7 +56,11 @@ class RoleSeeder extends Seeder
             'manager',
             'Content manager',
             [
-                $viewPermissionId, $createPermissionId, $updatePermissionId, $deletePermissionId, $publishPermissionId
+                $viewPermissionId,
+                $createPermissionId,
+                $updatePermissionId,
+                $deletePermissionId,
+                $publishPermissionId
             ]
         );
 
@@ -56,7 +69,10 @@ class RoleSeeder extends Seeder
             'author',
             'Post author',
             [
-                $viewPermissionId, $createPermissionId, $updatePermissionId, $deletePermissionId
+                $viewPermissionId,
+                $createPermissionId,
+                $updatePermissionId,
+                $deletePermissionId
             ]
         );
 
@@ -77,6 +93,7 @@ class RoleSeeder extends Seeder
      * @param string $slug
      * @param string $description
      * @param array $permissions
+     *
      * @return void
      */
     private function createRecord(string $name, string $slug, string $description, array $permissions): void

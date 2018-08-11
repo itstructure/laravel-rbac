@@ -9,8 +9,10 @@
 
             <p>
                 <form action="{{ route('delete_role') }}" method="post">
-                    <a class="btn btn-success" href="{{ route('edit_role', ['role' => $role->id]) }}" title="Edit">Edit role</a>
-                    <input type="submit" class="btn btn-danger" value="Delete role" title="Delete" onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
+                    <a class="btn btn-success" href="{{ route('edit_role', ['role' => $role->id]) }}"
+                       title="Edit">Edit role</a>
+                    <input type="submit" class="btn btn-danger" value="Delete role" title="Delete"
+                           onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
                     <input type="hidden" value="{{ $role->id }}" name="items[]">
                     <input type="hidden" value="{!! csrf_token() !!}" name="_token">
                 </form>
@@ -40,7 +42,9 @@
                         <td>Permissions</td>
                         <td>
                             @foreach($role->permissions as $permission)
-                                <a href="{{ route('show_permission', ['id' => $permission->id]) }}">{{ $permission->name }}</a> <br>
+                                <a href="{{ route('show_permission', ['id' => $permission->id]) }}">
+                                    {{ $permission->name }}
+                                </a> <br>
                             @endforeach
                         </td>
                     </tr>

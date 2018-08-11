@@ -60,6 +60,7 @@ class PermissionSeeder extends Seeder
      * @param string $name
      * @param string $slug
      * @param string $description
+     *
      * @return void
      */
     private function createRecord(string $name, string $slug, string $description): void

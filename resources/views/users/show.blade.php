@@ -9,9 +9,11 @@
 
             <p>
                 <form action="{{ route('delete_user') }}" method="post">
-                    <a class="btn btn-success" href="{{ route('edit_user', ['id' => $user->id]) }}" title="Edit">Assign user roles</a>
+                    <a class="btn btn-success" href="{{ route('edit_user', ['id' => $user->id]) }}"
+                       title="Edit">Assign user roles</a>
                     @can('delete-yourself', $user->id)
-                        <input type="submit" class="btn btn-danger" value="Delete user" title="Delete" onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
+                        <input type="submit" class="btn btn-danger" value="Delete user" title="Delete"
+                               onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
                         <input type="hidden" value="{{ $user->id }}" name="items[]">
                         <input type="hidden" value="{!! csrf_token() !!}" name="_token">
                     @endcan

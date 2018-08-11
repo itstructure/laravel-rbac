@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac;
 
 use Illuminate\Support\ServiceProvider;
@@ -11,6 +12,7 @@ use Itstructure\LaRbac\Commands\{InstallCommand, DatabaseCommand, AdminCommand};
  * Class RbacServiceProvider
  *
  * @package Itstructure\LaRbac
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class RbacServiceProvider extends ServiceProvider
@@ -109,6 +111,7 @@ class RbacServiceProvider extends ServiceProvider
      * Get package path.
      *
      * @param $path
+     *
      * @return string
      */
     private function packagePath($path): string

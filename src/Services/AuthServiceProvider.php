@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Services;
 
 use Illuminate\Support\Facades\Gate;
@@ -13,6 +14,7 @@ use Itstructure\LaRbac\Contracts\{
  * Class AuthServiceProvider
  *
  * @package Itstructure\LaRbac\Services
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class AuthServiceProvider extends ServiceProvider
@@ -41,7 +43,9 @@ class AuthServiceProvider extends ServiceProvider
     public function registerRbacPolicies()
     {
         Gate::define('administrate', function (RbacUserContract $user) {
-            return $user->hasAccess([Permission::ADMIN_PERMISSION]);
+            return $user->hasAccess([
+                Permission::ADMIN_PERMISSION
+            ]);
         });
 
         Gate::define('delete-yourself', function (RbacUserContract $user, int $memberId) {
@@ -49,23 +53,33 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('view-record', function (RbacUserContract $user) {
-            return $user->hasAccess(['view-record']);
+            return $user->hasAccess([
+                'view-record'
+            ]);
         });
 
         Gate::define('create-record', function (RbacUserContract $user) {
-            return $user->hasAccess(['create-record']);
+            return $user->hasAccess([
+                'create-record'
+            ]);
         });
 
         Gate::define('update-record', function (RbacUserContract $user, RbacModelContract $model) {
-            return $user->hasAccess(['update-record']) or $user->getIdAttribute() == $model->getAuthorIdAttribute();
+            return $user->hasAccess([
+                'update-record'
+            ]) || $user->getIdAttribute() == $model->getAuthorIdAttribute();
         });
 
         Gate::define('delete-record', function (RbacUserContract $user, RbacModelContract $model) {
-            return $user->hasAccess(['delete-record']) or $user->getIdAttribute() == $model->getAuthorIdAttribute();
+            return $user->hasAccess([
+                'delete-record'
+            ]) || $user->getIdAttribute() == $model->getAuthorIdAttribute();
         });
 
         Gate::define('publish-record', function (RbacUserContract $user) {
-            return $user->hasAccess(['publish-record']) or $user->inRole('editor');
+            return $user->hasAccess([
+                'publish-record'
+            ]) || $user->inRole('editor');
         });
     }
 }

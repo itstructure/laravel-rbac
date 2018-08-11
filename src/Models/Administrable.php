@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Models;
 
 use Itstructure\LaRbac\Contracts\User as RbacUserContract;
@@ -46,6 +47,7 @@ trait Administrable
      * Set new filled roles.
      *
      * @param $value
+     *
      * @return void
      */
     public function setRolesAttribute($value): void
@@ -67,6 +69,7 @@ trait Administrable
      * Checks if User has access to $permissions.
      *
      * @param array $permissions
+     *
      * @return bool
      */
     public function hasAccess(array $permissions) : bool
@@ -74,6 +77,7 @@ trait Administrable
         // check if the permission is available in any role
         /* @var Role $role */
         foreach ($this->roles as $role) {
+
             if($role->hasAccess($permissions)) {
                 return true;
             }
@@ -85,6 +89,7 @@ trait Administrable
      * Checks if the user belongs to role.
      *
      * @param string $roleSlug
+     *
      * @return bool
      */
     public function inRole(string $roleSlug): bool
@@ -93,8 +98,11 @@ trait Administrable
     }
 
     /**
+     * Can assign role checking.
+     *
      * @param RbacUserContract $member
      * @param Role $role
+     *
      * @return bool
      */
     public function canAssignRole(RbacUserContract $member, Role $role): bool
@@ -102,18 +110,23 @@ trait Administrable
         if ($this->countAdministrativeRoles() == 0) {
             return false;
         }
+
         if ($this->getIdAttribute() != $member->getIdAttribute()) {
             return true;
         }
+
         if ($this->countAdministrativeRoles() > 1) {
             return true;
         }
+
         if (!$role->hasAccess([Permission::ADMIN_PERMISSION])) {
             return true;
         }
+
         if ($this->inRole($role->slug)) {
             return false;
         }
+
         return true;
     }
 
@@ -121,6 +134,7 @@ trait Administrable
      * Synchronize user roles after save model.
      *
      * @param array $options
+     *
      * @return bool
      */
     public function save(array $options = [])
@@ -149,6 +163,7 @@ trait Administrable
 
         /* @var Role $role */
         foreach ($this->roles as $role) {
+
             if($role->hasAccess([Permission::ADMIN_PERMISSION])) {
                 $this->_countAdministrativeRoles += 1;
             }

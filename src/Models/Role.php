@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,7 @@ use Itstructure\LaRbac\Helpers\Helper;
  * Class Role
  *
  * @package Itstructure\LaRbac\Models
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class Role extends Model
@@ -48,6 +50,7 @@ class Role extends Model
      * Synchronize role permissions after save model.
      *
      * @param array $options
+     *
      * @return bool
      */
     public function save(array $options = [])
@@ -67,6 +70,7 @@ class Role extends Model
      * Get users by relation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     *
      * @throws InvalidConfigException
      */
     public function users()
@@ -81,6 +85,7 @@ class Role extends Model
      * Set slug by name.
      *
      * @param $value
+     *
      * @return void
      */
     public function setNameAttribute($value)
@@ -93,6 +98,7 @@ class Role extends Model
      * Set permissions.
      *
      * @param $value
+     *
      * @return void
      */
     public function setPermissionsAttribute($value)
@@ -114,14 +120,18 @@ class Role extends Model
      * Check if role has permissions, transferred to the function.
      *
      * @param array $permissions
+     *
      * @return bool
      */
     public function hasAccess(array $permissions) : bool
     {
         foreach ($permissions as $permission) {
-            if ($this->hasPermission($permission))
+
+            if ($this->hasPermission($permission)) {
                 return true;
+            }
         }
+
         return false;
     }
 
@@ -129,6 +139,7 @@ class Role extends Model
      * Check if role has single permission, transferred to the function.
      *
      * @param string $permission
+     *
      * @return bool
      */
     private function hasPermission(string $permission) : bool

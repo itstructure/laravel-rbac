@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Http\Controllers;
 
 use Illuminate\Support\Facades\Config;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Controller;
  * Class UserController
  *
  * @package Itstructure\LaRbac\Http\Controllers
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class UserController extends Controller
@@ -53,6 +55,7 @@ class UserController extends Controller
      * Render page to edit current user.
      *
      * @param int $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(int $id)
@@ -70,6 +73,7 @@ class UserController extends Controller
      *
      * @param int $id
      * @param UpdateUserRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(int $id, UpdateUserRequest $request)
@@ -85,6 +89,7 @@ class UserController extends Controller
      * Render page to show current user.
      *
      * @param int $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(int $id)
@@ -98,11 +103,13 @@ class UserController extends Controller
      * Delete current user data.
      *
      * @param DeleteUserRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(DeleteUserRequest $request)
     {
         foreach ($request->items as $item) {
+
             if (!is_numeric($item) || $request->user()->id == $item) {
                 continue;
             }
@@ -120,6 +127,7 @@ class UserController extends Controller
      * Find or fail user data.
      *
      * @param int $id
+     *
      * @return mixed
      */
     private function findOrFail(int $id)

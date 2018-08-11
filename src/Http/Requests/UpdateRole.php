@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Http\Requests;
 
 use Illuminate\Validation\Rule;
@@ -8,6 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * Class UpdateRole
  *
  * @package Itstructure\LaRbac\Http\Requests
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class UpdateRole extends FormRequest

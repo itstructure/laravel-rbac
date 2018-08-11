@@ -9,8 +9,10 @@
 
             <p>
                 <form action="{{ route('delete_permission') }}" method="post">
-                    <a class="btn btn-success" href="{{ route('edit_permission', ['permission' => $permission->id]) }}" title="Edit">Edit permission</a>
-                    <input type="submit" class="btn btn-danger" value="Delete permission" title="Delete" onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
+                    <a class="btn btn-success" href="{{ route('edit_permission', ['permission' => $permission->id]) }}"
+                       title="Edit">Edit permission</a>
+                    <input type="submit" class="btn btn-danger" value="Delete permission" title="Delete"
+                           onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
                     <input type="hidden" value="{{ $permission->id }}" name="items[]">
                     <input type="hidden" value="{!! csrf_token() !!}" name="_token">
                 </form>

@@ -32,6 +32,7 @@ class CreateUserRoleTable extends Migration
      * Run the migrations.
      *
      * @return void
+     *
      * @throws InvalidConfigException
      */
     public function up()

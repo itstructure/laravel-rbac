@@ -31,12 +31,12 @@ Laravel RBAC package
 
 Via composer:
 
-```composer require "itstructure/laravel-rbac": "^1.1.0"```
+```composer require "itstructure/laravel-rbac": "^1.1.1"```
 
 or in section **require** of composer.json file set the following:
 ```
 "require": {
-    "itstructure/laravel-rbac": "^1.1.0"
+    "itstructure/laravel-rbac": "^1.1.1"
 }
 ```
 and command ```composer install```, if you install laravel project extensions first,

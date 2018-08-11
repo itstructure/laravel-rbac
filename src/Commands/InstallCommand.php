@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Commands;
 
 use Illuminate\Console\Command;
@@ -10,6 +11,7 @@ use Itstructure\LaRbac\RbacServiceProvider;
  * Class InstallCommand
  *
  * @package Itstructure\LaRbac\Commands
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class InstallCommand extends Command

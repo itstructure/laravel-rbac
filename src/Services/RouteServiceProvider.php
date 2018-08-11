@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Services;
 
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
  * Class RouteServiceProvider
  *
  * @package Itstructure\LaRbac\Services
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class RouteServiceProvider extends ServiceProvider

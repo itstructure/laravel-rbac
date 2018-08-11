@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Commands;
 
 use Illuminate\Console\Command;
@@ -7,6 +8,7 @@ use Illuminate\Console\Command;
  * Class DatabaseCommand
  *
  * @package Itstructure\LaRbac\Commands
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class DatabaseCommand extends Command

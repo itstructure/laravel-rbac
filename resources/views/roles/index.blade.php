@@ -30,7 +30,9 @@
                             </td>
                             <td>
                                 @foreach($role->permissions as $permission)
-                                    <a href="{{ route('show_permission', ['id' => $permission->id]) }}">{{ $permission->name }}</a> <br>
+                                    <a href="{{ route('show_permission', ['id' => $permission->id]) }}">
+                                        {{ $permission->name }}
+                                    </a> <br>
                                 @endforeach
                             </td>
                             <td>
@@ -51,7 +53,9 @@
                         <strong>{{ $errors->first('items') }}</strong>
                     </span>
                 @endif
-                <input type="submit" class="btn btn-danger" value="Delete selected" title="Delete" onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
+                <input type="submit" class="btn btn-danger"
+                       value="Delete selected" title="Delete"
+                       onclick="if (!confirm('{{ config('rbac.deleteConfirmation') }}')) {return false;}">
                 <input type="hidden" value="{!! csrf_token() !!}" name="_token">
             </form>
 

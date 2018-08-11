@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -7,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * Class StorePermission
  *
  * @package Itstructure\LaRbac\Http\Requests
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class StorePermission extends FormRequest

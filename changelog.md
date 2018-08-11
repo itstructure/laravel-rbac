@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**1.1.1 August 11, 2018:**
+- Code fixes according with the PSR standards.
+
 **1.1.0 July 23, 2018:**
 - Modify delete items
 - Protect self user delete

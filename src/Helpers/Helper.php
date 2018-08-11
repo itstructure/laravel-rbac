@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Helpers;
 
 use Itstructure\LaRbac\Exceptions\InvalidConfigException;
@@ -8,6 +9,7 @@ use Itstructure\LaRbac\Contracts\User as UserContract;
  * Class Helper
  *
  * @package Itstructure\LaRbac\Helpers
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class Helper
@@ -21,6 +23,7 @@ class Helper
      * Check user model for instance of UserContract and parent Auth User model.
      *
      * @param string $userModelClass
+     *
      * @throws InvalidConfigException
      */
     public static function checkUserModel(string $userModelClass)
@@ -38,6 +41,7 @@ class Helper
      * Check user model for instance of UserContract.
      *
      * @param string $userModelClass
+     *
      * @return bool
      */
     public static function checkUserContract(string $userModelClass): bool
@@ -56,6 +60,7 @@ class Helper
      *
      * @param string $userModelClass
      * @param string $parentNeed
+     *
      * @return bool
      */
     public static function checkUserParent(string $userModelClass, string $parentNeed = null): bool
@@ -85,6 +90,7 @@ class Helper
      * Get error message if user model is not an instance of parent Auth User model.
      *
      * @param string $parentNeed
+     *
      * @return string
      */
     public static function parentErrorMessage(string $parentNeed = null): string

@@ -1,4 +1,5 @@
 <?php
+
 namespace Itstructure\LaRbac\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Permission
  *
  * @package Itstructure\LaRbac\Models
+ *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 class Permission extends Model
@@ -35,6 +37,7 @@ class Permission extends Model
      * Set slug by name.
      *
      * @param $value
+     *
      * @return void
      */
     public function setNameAttribute($value)
