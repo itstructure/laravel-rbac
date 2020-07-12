@@ -12,20 +12,18 @@ class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
      * @return void
      */
     public function run()
     {
-        $totalPermissionId   = Permission::where('slug', Permission::ADMIN_PERMISSION)->firstOrFail()->id;
-        $viewPermissionId    = Permission::where('slug', 'view-record')->firstOrFail()->id;
-        $createPermissionId  = Permission::where('slug', 'create-record')->firstOrFail()->id;
-        $updatePermissionId  = Permission::where('slug', 'update-record')->firstOrFail()->id;
-        $deletePermissionId  = Permission::where('slug', 'delete-record')->firstOrFail()->id;
-        $publishPermissionId = Permission::where('slug', 'publish-record')->firstOrFail()->id;
+        $totalPermissionId   = Permission::where('slug', Permission::ADMINISTRATE_PERMISSION)->firstOrFail()->id;
+        $viewPermissionId    = Permission::where('slug', Permission::VIEW_RECORD_PERMISSION)->firstOrFail()->id;
+        $createPermissionId  = Permission::where('slug', Permission::CREATE_RECORD_PERMISSION)->firstOrFail()->id;
+        $updatePermissionId  = Permission::where('slug', Permission::UPDATE_RECORD_PERMISSION)->firstOrFail()->id;
+        $deletePermissionId  = Permission::where('slug', Permission::DELETE_RECORD_PERMISSION)->firstOrFail()->id;
+        $publishPermissionId = Permission::where('slug', Permission::PUBLISH_RECORD_PERMISSION)->firstOrFail()->id;
 
         $this->createRecord(
-            ucfirst(Role::ADMIN_ROLE),
             Role::ADMIN_ROLE,
             'Administrator',
             [
@@ -39,21 +37,7 @@ class RoleSeeder extends Seeder
         );
 
         $this->createRecord(
-            'Editor',
-            'editor',
-            'Post editor',
-            [
-                $viewPermissionId,
-                $createPermissionId,
-                $updatePermissionId,
-                $deletePermissionId,
-                $publishPermissionId
-            ]
-        );
-
-        $this->createRecord(
-            'Manager',
-            'manager',
+            Role::MANAGER_ROLE,
             'Content manager',
             [
                 $viewPermissionId,
@@ -65,20 +49,19 @@ class RoleSeeder extends Seeder
         );
 
         $this->createRecord(
-            'Author',
-            'author',
-            'Post author',
+            Role::EDITOR_ROLE,
+            'Record editor',
             [
                 $viewPermissionId,
                 $createPermissionId,
                 $updatePermissionId,
-                $deletePermissionId
+                $deletePermissionId,
+                $publishPermissionId
             ]
         );
 
         $this->createRecord(
-            'User',
-            'user',
+            Role::USER_ROLE,
             'Simple user',
             [
                 $viewPermissionId
@@ -88,18 +71,15 @@ class RoleSeeder extends Seeder
 
     /**
      * Create role record in database.
-     *
-     * @param string $name
      * @param string $slug
      * @param string $description
      * @param array $permissions
-     *
      * @return void
      */
-    private function createRecord(string $name, string $slug, string $description, array $permissions): void
+    private function createRecord(string $slug, string $description, array $permissions): void
     {
         Role::create([
-            'name' => $name,
+            'name' => ucfirst($slug),
             'slug' => $slug,
             'description' => $description,
         ])->permissions()

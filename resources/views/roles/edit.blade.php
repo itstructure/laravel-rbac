@@ -1,28 +1,24 @@
-@section('title', 'Edit Role')
-@extends('adminlte::page')
+@extends($rbacLayout)
+@section('title', __('rbac::roles.edit_role'))
 @section('content')
 
     <section class="content container-fluid">
-        <div class="role-edit">
+        <div class="row">
+            <div class="col-12">
 
-            <div class="row">
-                <div class="col-md-4">
+                <h2>{!! __('rbac::roles.edit_role') !!}: <a href="{{route('show_role', ['id' => $role->id])}}">{{ $role->name }}</a></h2>
 
-                    <h1>Edit role: {{ $role->name }}</h1>
+                <form action="{{ route('update_role', ['role' => $role->id]) }}" method="post">
 
-                    <form action="{{ route('update_role', ['role' => $role->id]) }}" method="post">
+                    @include('rbac::roles._fields', ['edit' => true])
 
-                        @include('rbac::roles._fields')
+                    <button class="btn btn-primary" type="submit">{!! __('rbac::main.edit') !!}</button>
 
-                        <button class="btn btn-primary" type="submit">Edit</button>
+                    <input type="hidden" value="{!! csrf_token() !!}" name="_token">
 
-                        <input type="hidden" value="{!! csrf_token() !!}" name="_token">
+                </form>
 
-                    </form>
-
-                </div>
             </div>
-
         </div>
     </section>
 

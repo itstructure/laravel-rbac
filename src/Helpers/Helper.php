@@ -2,8 +2,9 @@
 
 namespace Itstructure\LaRbac\Helpers;
 
-use Itstructure\LaRbac\Exceptions\InvalidConfigException;
-use Itstructure\LaRbac\Contracts\User as UserContract;
+use Exception;
+use Illuminate\Foundation\Auth\User as ParentUser;
+use Itstructure\LaRbac\Interfaces\RbacUserInterface;
 
 /**
  * Class Helper
@@ -15,88 +16,101 @@ use Itstructure\LaRbac\Contracts\User as UserContract;
 class Helper
 {
     /**
-     * @var string
+     * Check user model for be implemented by RbacUserInterface and extended of parent Auth User model.
+     * @param string|null $userModelClass
+     * @throws Exception
      */
-    private static $parentNeed = 'Illuminate\Foundation\Auth\User';
-
-    /**
-     * Check user model for instance of UserContract and parent Auth User model.
-     *
-     * @param string $userModelClass
-     *
-     * @throws InvalidConfigException
-     */
-    public static function checkUserModel(string $userModelClass)
+    public static function checkUserModel(string $userModelClass = null)
     {
-        if (!self::checkUserContract($userModelClass)) {
-            throw new InvalidConfigException(self::contractErrorMessage());
+        if (empty($userModelClass)) {
+            throw new Exception('User Model class is not defined in "rbac" config file.');
         }
 
-        if (!self::checkUserParent($userModelClass)) {
-            throw new InvalidConfigException(self::parentErrorMessage());
-        }
+        static::checkUserModelInterface($userModelClass, RbacUserInterface::class);
+
+        static::checkUserModelParent($userModelClass, ParentUser::class);
     }
 
     /**
-     * Check user model for instance of UserContract.
-     *
+     * Check user model for be implemented by RbacUserInterface.
      * @param string $userModelClass
-     *
-     * @return bool
+     * @param string $interfaceClass
+     * @throws Exception
      */
-    public static function checkUserContract(string $userModelClass): bool
+    public static function checkUserModelInterface(string $userModelClass, string $interfaceClass): void
     {
         $userModelInterfaces = class_implements($userModelClass);
 
-        if (isset($userModelInterfaces[UserContract::class])) {
-            return true;
+        if (!isset($userModelInterfaces[$interfaceClass])) {
+            throw new Exception('User Model class must be implemented from "'.$interfaceClass.'".');
         }
-
-        return false;
     }
 
     /**
      * Check user model for instance of parent Auth User model.
-     *
      * @param string $userModelClass
-     * @param string $parentNeed
-     *
-     * @return bool
+     * @param string $parentClass
+     * @throws Exception
      */
-    public static function checkUserParent(string $userModelClass, string $parentNeed = null): bool
+    public static function checkUserModelParent(string $userModelClass, string $parentClass): void
     {
         $userModelParents = class_parents($userModelClass);
 
-        $parentNeed = $parentNeed ?? self::$parentNeed;
-
-        if (isset($userModelParents[$parentNeed])) {
-            return true;
+        if (!isset($userModelParents[$parentClass])) {
+            throw new Exception('User Model class should be extended from "'.$parentClass.'".');
         }
-
-        return false;
     }
 
     /**
-     * Get error message if user model is not an instance of UserContract.
-     *
-     * @return string
+     * Check a primary key type of a User model.
+     * @param ParentUser $userModelObject
+     * @throws Exception
      */
-    public static function contractErrorMessage(): string
+    public static function checkUserModelKeyType(ParentUser $userModelObject): void
     {
-        return 'User Model class must be instance of '.UserContract::class.'.';
+        if (!in_array($userModelObject->getKeyType(), ['int', 'integer'])) {
+            throw new Exception('User Model keyType must be type of "int".');
+        }
     }
 
     /**
-     * Get error message if user model is not an instance of parent Auth User model.
-     *
-     * @param string $parentNeed
-     *
-     * @return string
+     * Check a primary key type of a users table.
+     * @param string $userTablePrimaryType
+     * @param string $userModelKeyName
+     * @param string $userModelTable
+     * @throws Exception
      */
-    public static function parentErrorMessage(string $parentNeed = null): string
+    public static function checkUserTablePrimaryType(string $userTablePrimaryType, string $userModelKeyName, string $userModelTable): void
     {
-        $parentNeed = $parentNeed ?? self::$parentNeed;
+        if (!in_array($userTablePrimaryType, ['bigint', 'integer'])) {
+            throw new Exception('Primary key "'.$userModelKeyName.'" in "'.$userModelTable.'" table must be type of "bigint" or "integer"');
+        }
+    }
 
-        return 'User Model class should extend from '.$parentNeed.'.';
+    /**
+     * Check for correct defining of an Admin user ID value at the beginning package installation.
+     * @param int|null $adminUserId
+     * @throws Exception
+     */
+    public static function checkAdminUserId(int $adminUserId = null): void
+    {
+        if (empty($adminUserId) || !is_int($adminUserId)) {
+            throw new Exception('Identifier of a desired Admin user is not defined in "rbac" config file.');
+        }
+    }
+
+    /**
+     * Retrieve user model entity.
+     * @param string $userModelClass
+     * @param int $adminUserId
+     * @return mixed
+     * @throws Exception
+     */
+    public static function retrieveUserModel(string $userModelClass, int $adminUserId)
+    {
+        return call_user_func([
+            $userModelClass,
+            'findOrFail',
+        ], $adminUserId);
     }
 }

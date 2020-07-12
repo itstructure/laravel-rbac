@@ -20,7 +20,7 @@ class Delete extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return !empty(config('rbac.routesMainPermission')) ? $this->user()->can(config('rbac.routesMainPermission')) : true;
     }
 
     /**
@@ -41,7 +41,7 @@ class Delete extends FormRequest
     public function messages()
     {
         return [
-            'items.required' => config('rbac.deleteRequired'),
+            'items.required' => __('rbac::validation.required_to_delete'),
         ];
     }
 }

@@ -1,28 +1,24 @@
-@section('title', 'Create Role')
-@extends('adminlte::page')
+@extends($rbacLayout)
+@section('title', __('rbac::roles.create_role'))
 @section('content')
 
     <section class="content container-fluid">
-        <div class="role-create">
+        <div class="row">
+            <div class="col-12">
 
-            <div class="row">
-                <div class="col-md-4">
+                <h2>{!! __('rbac::roles.create_role') !!}</h2>
 
-                    <h1>Create role</h1>
+                <form action="{{ route('store_role') }}" method="post">
 
-                    <form action="{{ route('store_role') }}" method="post">
+                    @include('rbac::roles._fields', ['edit' => false])
 
-                        @include('rbac::roles._fields')
+                    <button class="btn btn-primary" type="submit">{!! __('rbac::main.create') !!}</button>
 
-                        <button class="btn btn-primary" type="submit">Create</button>
+                    <input type="hidden" value="{!! csrf_token() !!}" name="_token">
 
-                        <input type="hidden" value="{!! csrf_token() !!}" name="_token">
+                </form>
 
-                    </form>
-
-                </div>
             </div>
-
         </div>
     </section>
 

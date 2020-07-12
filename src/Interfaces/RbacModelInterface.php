@@ -1,19 +1,18 @@
 <?php
 
-namespace Itstructure\LaRbac\Contracts;
+namespace Itstructure\LaRbac\Interfaces;
 
 /**
- * Interface Model
+ * Interface RbacModelInterface
  *
- * @package Itstructure\LaRbac\Contracts
+ * @package Itstructure\LaRbac\Interfaces
  *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
-interface Model
+interface RbacModelInterface
 {
     /**
      * Get Author id which related with user model record.
-     *
      * @return int
      */
     public function getAuthorIdAttribute(): int;

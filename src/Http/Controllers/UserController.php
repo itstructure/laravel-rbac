@@ -2,13 +2,14 @@
 
 namespace Itstructure\LaRbac\Http\Controllers;
 
-use Illuminate\Support\Facades\Config;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Itstructure\LaRbac\Helpers\Helper;
 use Itstructure\LaRbac\Models\Role;
 use Itstructure\LaRbac\Http\Requests\{
     UpdateUser as UpdateUserRequest,
     Delete as DeleteUserRequest
 };
+use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use App\Http\Controllers\Controller;
 
 /**
@@ -23,39 +24,35 @@ class UserController extends Controller
     /**
      * @var string
      */
-    private $userModelClass;
+    private $_userModelClass;
 
     /**
      * UserController constructor.
      */
     public function __construct()
     {
-        $this->userModelClass = config('rbac.userModelClass');
-
-        Helper::checkUserModel($this->userModelClass);
+        $this->_userModelClass = config('rbac.userModelClass');
     }
 
     /**
      * Get list of all users.
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $users = call_user_func([
-            $this->userModelClass,
-            'with',
-        ], 'roles')->orderBy('id', 'asc')
-            ->paginate(Config::get('rbac.paginate.main'));
+        /** @var Authenticatable $userModelObj */
+        $userModelObj = new $this->_userModelClass();
 
-        return view('rbac::users.index', compact('users'));
+        $dataProvider = new EloquentDataProvider($userModelObj->newQuery()->with('roles'));
+
+        $authIdentifierName = $userModelObj->getAuthIdentifierName();
+
+        return view('rbac::users.index', compact('dataProvider', 'authIdentifierName'));
     }
 
     /**
      * Render page to edit current user.
-     *
      * @param int $id
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(int $id)
@@ -70,10 +67,8 @@ class UserController extends Controller
 
     /**
      * Update current user data.
-     *
      * @param int $id
      * @param UpdateUserRequest $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(int $id, UpdateUserRequest $request)
@@ -87,9 +82,7 @@ class UserController extends Controller
 
     /**
      * Render page to show current user.
-     *
      * @param int $id
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(int $id)
@@ -101,21 +94,19 @@ class UserController extends Controller
 
     /**
      * Delete current user data.
-     *
      * @param DeleteUserRequest $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(DeleteUserRequest $request)
     {
         foreach ($request->items as $item) {
 
-            if (!is_numeric($item) || $request->user()->id == $item) {
+            if (!is_numeric($item) || $request->user()->getAuthIdentifier() == $item) {
                 continue;
             }
 
             call_user_func([
-                $this->userModelClass,
+                $this->_userModelClass,
                 'destroy',
             ], $item);
         }
@@ -125,16 +116,11 @@ class UserController extends Controller
 
     /**
      * Find or fail user data.
-     *
      * @param int $id
-     *
      * @return mixed
      */
     private function findOrFail(int $id)
     {
-        return call_user_func([
-            $this->userModelClass,
-            'findOrFail',
-        ], $id);
+        return Helper::retrieveUserModel($this->_userModelClass, $id);
     }
 }

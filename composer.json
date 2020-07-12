@@ -2,7 +2,7 @@
     "name": "itstructure/laravel-rbac",
     "description": "Laravel package for RBAC manage",
     "type": "library",
-    "keywords": ["laravel", "rbac"],
+    "keywords": ["laravel", "rbac", "role", "permission"],
     "license": "MIT",
     "authors": [
         {
@@ -15,9 +15,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "laravel/framework": "~5.1.12|~5.2.0|~5.3.0|~5.4.0|~5.5.0|~5.6.0",
-        "php": ">=7.1.0",
-        "jeroennoten/laravel-adminlte": "~1.23"
+        "laravel/framework": "^6.0|^7.0",
+        "php": ">=7.2.0",
+        "itstructure/laravel-grid-view": "~1.0.4"
     },
     "classmap": [
         "database/migrations",

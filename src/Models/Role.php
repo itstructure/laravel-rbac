@@ -2,9 +2,8 @@
 
 namespace Itstructure\LaRbac\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Itstructure\LaRbac\Exceptions\InvalidConfigException;
-use Itstructure\LaRbac\Helpers\Helper;
 
 /**
  * Class Role
@@ -16,6 +15,9 @@ use Itstructure\LaRbac\Helpers\Helper;
 class Role extends Model
 {
     const ADMIN_ROLE = 'admin';
+    const MANAGER_ROLE = 'manager';
+    const EDITOR_ROLE = 'editor';
+    const USER_ROLE = 'user';
 
     /**
      * @var array
@@ -27,7 +29,7 @@ class Role extends Model
     /**
      * @var string
      */
-    private $userModelClass;
+    private $_userModelClass;
 
     /**
      * @var array
@@ -36,21 +38,18 @@ class Role extends Model
 
     /**
      * Role constructor.
-     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
-        $this->userModelClass = config('rbac.userModelClass');
+        $this->_userModelClass = config('rbac.userModelClass');
 
         parent::__construct($attributes);
     }
 
     /**
      * Synchronize role permissions after save model.
-     *
      * @param array $options
-     *
      * @return bool
      */
     public function save(array $options = [])
@@ -68,37 +67,28 @@ class Role extends Model
 
     /**
      * Get users by relation.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     *
-     * @throws InvalidConfigException
      */
     public function users()
     {
-        Helper::checkUserModel($this->userModelClass);
-
-        return $this->belongsToMany($this->userModelClass, 'user_role', 'role_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany($this->_userModelClass, 'user_role', 'role_id', 'user_id')->withTimestamps();
     }
 
     /**
      * Set name.
      * Set slug by name.
-     *
      * @param $value
-     *
      * @return void
      */
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = $value;
-        $this->attributes['slug'] = str_slug(strtolower($value));
+        $this->attributes['slug'] = Str::slug($value, '-');
     }
 
     /**
      * Set permissions.
-     *
      * @param $value
-     *
      * @return void
      */
     public function setPermissionsAttribute($value)
@@ -108,7 +98,6 @@ class Role extends Model
 
     /**
      * Get permissions by relation.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function permissions()
@@ -118,9 +107,7 @@ class Role extends Model
 
     /**
      * Check if role has permissions, transferred to the function.
-     *
      * @param array $permissions
-     *
      * @return bool
      */
     public function hasAccess(array $permissions) : bool
@@ -137,9 +124,7 @@ class Role extends Model
 
     /**
      * Check if role has single permission, transferred to the function.
-     *
      * @param string $permission
-     *
      * @return bool
      */
     private function hasPermission(string $permission) : bool

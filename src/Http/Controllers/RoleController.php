@@ -2,13 +2,13 @@
 
 namespace Itstructure\LaRbac\Http\Controllers;
 
-use Illuminate\Support\Facades\Config;
 use Itstructure\LaRbac\Models\{Role, Permission};
 use Itstructure\LaRbac\Http\Requests\{
     StoreRole as StoreRoleRequest,
     UpdateRole as UpdateRoleRequest,
     Delete as DeleteRoleRequest
 };
+use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use App\Http\Controllers\Controller;
 
 /**
@@ -22,20 +22,17 @@ class RoleController extends Controller
 {
     /**
      * Get list of all roles.
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $roles = Role::with('permissions')->orderBy('id', 'asc')
-            ->paginate(Config::get('rbac.paginate.main'));
+        $dataProvider = new EloquentDataProvider(Role::query()->with('permissions'));
 
-        return view('rbac::roles.index', compact('roles'));
+        return view('rbac::roles.index', compact('dataProvider'));
     }
 
     /**
      * Render page to create new role.
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
@@ -47,9 +44,7 @@ class RoleController extends Controller
 
     /**
      * Store new role data.
-     *
      * @param StoreRoleRequest $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreRoleRequest $request)
@@ -61,9 +56,7 @@ class RoleController extends Controller
 
     /**
      * Render page to edit current role.
-     *
      * @param Role $role
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Role $role)
@@ -76,10 +69,8 @@ class RoleController extends Controller
 
     /**
      * Update current role data.
-     *
      * @param Role $role
      * @param UpdateRoleRequest $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Role $role, UpdateRoleRequest $request)
@@ -93,9 +84,7 @@ class RoleController extends Controller
 
     /**
      * Render page to show current role.
-     *
      * @param int $id
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(int $id)
@@ -107,9 +96,7 @@ class RoleController extends Controller
 
     /**
      * Delete current role data.
-     *
      * @param DeleteRoleRequest $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(DeleteRoleRequest $request)

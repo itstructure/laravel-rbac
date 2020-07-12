@@ -1,13 +1,14 @@
 <?php
 
-namespace Itstructure\LaRbac\Models;
+namespace Itstructure\LaRbac\Traits;
 
-use Itstructure\LaRbac\Contracts\User as RbacUserContract;
+use Itstructure\LaRbac\Interfaces\RbacUserInterface;
+use Itstructure\LaRbac\Models\{Role, Permission};
 
 /**
  * Class Administrable
  *
- * @package Itstructure\LaRbac\Models
+ * @package Itstructure\LaRbac\Traits
  */
 trait Administrable
 {
@@ -25,29 +26,38 @@ trait Administrable
 
     /**
      * User identifier.
-     *
-     * @return int
+     * @return mixed
      */
-    public function getIdAttribute(): int
+    public function getMemberKeyAttribute()
     {
-        return $this->attributes['id'];
+        return $this->attributes[$this->getAuthIdentifierName()];
     }
 
     /**
-     * User name.
-     *
      * @return string
      */
-    public function getNameAttribute(): string
+    public function getMemberNameAttribute(): string
     {
-        return $this->attributes['name'];
+        $userNameAttributeKey = config('rbac.memberNameAttributeKey');
+
+        if (empty($userNameAttributeKey)) {
+            return '';
+        }
+
+        if (is_string($userNameAttributeKey)) {
+            return $this->attributes[$userNameAttributeKey];
+        }
+
+        if (is_callable($userNameAttributeKey)) {
+            return $userNameAttributeKey($this);
+        }
+
+        return '';
     }
 
     /**
      * Set new filled roles.
-     *
      * @param $value
-     *
      * @return void
      */
     public function setRolesAttribute($value): void
@@ -57,7 +67,6 @@ trait Administrable
 
     /**
      * Get user roles by relation.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles()
@@ -67,16 +76,14 @@ trait Administrable
 
     /**
      * Checks if User has access to $permissions.
-     *
      * @param array $permissions
-     *
      * @return bool
      */
     public function hasAccess(array $permissions) : bool
     {
         // check if the permission is available in any role
         /* @var Role $role */
-        foreach ($this->roles as $role) {
+        foreach ($this->roles()->get() as $role) {
 
             if($role->hasAccess($permissions)) {
                 return true;
@@ -87,9 +94,7 @@ trait Administrable
 
     /**
      * Checks if the user belongs to role.
-     *
      * @param string $roleSlug
-     *
      * @return bool
      */
     public function inRole(string $roleSlug): bool
@@ -99,19 +104,17 @@ trait Administrable
 
     /**
      * Can assign role checking.
-     *
-     * @param RbacUserContract $member
+     * @param RbacUserInterface $member
      * @param Role $role
-     *
      * @return bool
      */
-    public function canAssignRole(RbacUserContract $member, Role $role): bool
+    public function canAssignRole(RbacUserInterface $member, Role $role): bool
     {
         if ($this->countAdministrativeRoles() == 0) {
             return false;
         }
 
-        if ($this->getIdAttribute() != $member->getIdAttribute()) {
+        if ($this->getMemberKeyAttribute() != $member->getMemberKeyAttribute()) {
             return true;
         }
 
@@ -119,7 +122,7 @@ trait Administrable
             return true;
         }
 
-        if (!$role->hasAccess([Permission::ADMIN_PERMISSION])) {
+        if (!$role->hasAccess([Permission::ADMINISTRATE_PERMISSION])) {
             return true;
         }
 
@@ -132,9 +135,7 @@ trait Administrable
 
     /**
      * Synchronize user roles after save model.
-     *
      * @param array $options
-     *
      * @return bool
      */
     public function save(array $options = [])
@@ -162,9 +163,9 @@ trait Administrable
         $this->_countAdministrativeRoles = 0;
 
         /* @var Role $role */
-        foreach ($this->roles as $role) {
+        foreach ($this->roles()->get() as $role) {
 
-            if($role->hasAccess([Permission::ADMIN_PERMISSION])) {
+            if($role->hasAccess([Permission::ADMINISTRATE_PERMISSION])) {
                 $this->_countAdministrativeRoles += 1;
             }
         }

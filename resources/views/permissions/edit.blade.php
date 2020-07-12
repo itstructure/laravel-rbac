@@ -1,28 +1,24 @@
-@section('title', 'Edit Permission')
-@extends('adminlte::page')
+@extends($rbacLayout)
+@section('title', __('rbac::permissions.edit_permission'))
 @section('content')
 
     <section class="content container-fluid">
-        <div class="permission-edit">
+        <div class="row">
+            <div class="col-12">
 
-            <div class="row">
-                <div class="col-md-4">
+                <h2>{!! __('rbac::permissions.edit_permission') !!}: <a href="{{route('show_permission', ['id' => $permission->id])}}">{{ $permission->name }}</a></h2>
 
-                    <h1>Edit permission: {{ $permission->name }}</h1>
+                <form action="{{ route('update_permission', ['permission' => $permission->id]) }}" method="post">
 
-                    <form action="{{ route('update_permission', ['permission' => $permission->id]) }}" method="post">
+                    @include('rbac::permissions._fields', ['edit' => true])
 
-                        @include('rbac::permissions._fields')
+                    <button class="btn btn-primary" type="submit">{!! __('rbac::main.edit') !!}</button>
 
-                        <button class="btn btn-primary" type="submit">Edit</button>
+                    <input type="hidden" value="{!! csrf_token() !!}" name="_token">
 
-                        <input type="hidden" value="{!! csrf_token() !!}" name="_token">
+                </form>
 
-                    </form>
-
-                </div>
             </div>
-
         </div>
     </section>
 

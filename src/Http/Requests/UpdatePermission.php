@@ -21,7 +21,7 @@ class UpdatePermission extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return !empty(config('rbac.routesMainPermission')) ? $this->user()->can(config('rbac.routesMainPermission')) : true;
     }
 
     /**
@@ -36,6 +36,7 @@ class UpdatePermission extends FormRequest
             'name' => [
                 'required',
                 'string',
+                'regex:/^[\w\s\-]+$/',
                 'min:3',
                 'max:191',
                 Rule::unique('permissions')->where('id', '<>', $id),
@@ -47,6 +48,36 @@ class UpdatePermission extends FormRequest
                 'max:191',
                 Rule::unique('permissions')->where('id', '<>', $id),
             ],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required' => __('rbac::validation.required'),
+            'string' => __('rbac::validation.string'),
+            'regex' => __('rbac::validation.regex'),
+            'min' => __('rbac::validation.min'),
+            'max' => __('rbac::validation.max'),
+            'unique' => __('rbac::validation.unique'),
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => __('rbac::main.name'),
+            'description' => __('rbac::main.description'),
         ];
     }
 }

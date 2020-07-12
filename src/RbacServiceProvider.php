@@ -2,11 +2,11 @@
 
 namespace Itstructure\LaRbac;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use JeroenNoten\LaravelAdminLte\ServiceProvider as AdminLteServiceProvider;
-use Itstructure\LaRbac\Services\RouteServiceProvider;
-use Itstructure\LaRbac\Services\AuthServiceProvider;
-use Itstructure\LaRbac\Commands\{InstallCommand, DatabaseCommand, AdminCommand};
+use Itstructure\LaRbac\Commands\{PublishCommand, DatabaseCommand, AdminCommand};
+use Itstructure\GridView\GridViewServiceProvider;
+use Itstructure\GridView\Grid;
 
 /**
  * Class RbacServiceProvider
@@ -19,57 +19,95 @@ class RbacServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        // Register dependency packages
-        $this->app->register(AdminLteServiceProvider::class);
+        $this->app->register(RbacRouteServiceProvider::class);
+        $this->app->register(RbacAuthServiceProvider::class);
+        $this->app->register(GridViewServiceProvider::class);
 
-        // Register internal services
-        $this->app->register(RouteServiceProvider::class);
-        $this->app->register(AuthServiceProvider::class);
-
-        // Register commands
-        $this->commands(Commands\InstallCommand::class);
-        $this->commands(Commands\DatabaseCommand::class);
-        $this->commands(Commands\AdminCommand::class);
+        $this->registerCommands();
     }
 
     public function boot()
     {
+        // Loading settings
         $this->loadViews();
+        $this->loadTranslations();
+        $this->loadMigrations();
 
-        $this->publishViews();
 
+        // Publish settings
         $this->publishConfig();
-
+        $this->publishViews();
+        $this->publishTranslations();
         $this->publishMigrations();
-
         $this->publishSeeds();
+
+
+        // Global view's params
+        View::share('rbacLayout', config('rbac.layout'));
+        View::share('rbacRowsPerPage', config('rbac.rowsPerPage', Grid::INIT_ROWS_PER_PAGE));
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | COMMAND SETTINGS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Register commands.
+     * @return void
+     */
+    private function registerCommands(): void
+    {
+        $this->commands(Commands\PublishCommand::class);
+        $this->commands(Commands\DatabaseCommand::class);
+        $this->commands(Commands\AdminCommand::class);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOADING SETTINGS
+    |--------------------------------------------------------------------------
+    */
 
     /**
      * Set directory to load views.
-     *
      * @return void
      */
     private function loadViews(): void
     {
-        $this->loadViewsFrom(base_path('resources/views/vendor/rbac'), 'rbac');
+        $this->loadViewsFrom($this->packagePath('resources/views'), 'rbac');
     }
 
     /**
-     * Publish views.
-     *
+     * Set directory to load translations.
      * @return void
      */
-    private function publishViews(): void
+    private function loadTranslations(): void
     {
-        $this->publishes([
-            $this->packagePath('resources/views') => base_path('resources/views/vendor/rbac'),
-        ], 'views');
+        $this->loadTranslationsFrom($this->packagePath('resources/lang'), 'rbac');
     }
 
     /**
-     * Publish configs.
-     *
+     * Set directory to load migrations.
+     * @return void
+     */
+    private function loadMigrations(): void
+    {
+        $this->loadMigrationsFrom($this->packagePath('database/migrations'));
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PUBLISH SETTINGS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Publish config.
      * @return void
      */
     private function publishConfig(): void
@@ -84,8 +122,29 @@ class RbacServiceProvider extends ServiceProvider
     }
 
     /**
+     * Publish views.
+     * @return void
+     */
+    private function publishViews(): void
+    {
+        $this->publishes([
+            $this->packagePath('resources/views') => resource_path('views/vendor/rbac'),
+        ], 'views');
+    }
+
+    /**
+     * Publish translations.
+     * @return void
+     */
+    private function publishTranslations(): void
+    {
+        $this->publishes([
+            $this->packagePath('resources/lang') => resource_path('lang/vendor/rbac'),
+        ], 'lang');
+    }
+
+    /**
      * Publish migrations.
-     *
      * @return void
      */
     private function publishMigrations(): void
@@ -97,7 +156,6 @@ class RbacServiceProvider extends ServiceProvider
 
     /**
      * Publish seeds.
-     *
      * @return void
      */
     private function publishSeeds(): void
@@ -107,15 +165,20 @@ class RbacServiceProvider extends ServiceProvider
         ], 'seeds');
     }
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | OTHER SETTINGS
+    |--------------------------------------------------------------------------
+    */
+
     /**
      * Get package path.
-     *
      * @param $path
-     *
      * @return string
      */
     private function packagePath($path): string
     {
-        return __DIR__."/../$path";
+        return __DIR__ . "/../" . $path;
     }
 }

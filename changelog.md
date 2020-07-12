@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**2.0.0 July 12, 2020:**
+- Total package reconstruction.
+
 **1.1.1 August 11, 2018:**
 - Code fixes according with the PSR standards.
 

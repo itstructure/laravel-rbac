@@ -1,8 +1,4 @@
-Laravel RBAC package
-==============
-
-1 Introduction
-----------------------------
+# Laravel RBAC package
 
 [![Latest Stable Version](https://poser.pugx.org/itstructure/laravel-rbac/v/stable)](https://packagist.org/packages/itstructure/laravel-rbac)
 [![Latest Unstable Version](https://poser.pugx.org/itstructure/laravel-rbac/v/unstable)](https://packagist.org/packages/itstructure/laravel-rbac)
@@ -11,43 +7,36 @@ Laravel RBAC package
 [![Build Status](https://scrutinizer-ci.com/g/itstructure/laravel-rbac/badges/build.png?b=master)](https://scrutinizer-ci.com/g/itstructure/laravel-rbac/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/itstructure/laravel-rbac/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/itstructure/laravel-rbac/?branch=master)
 
-**LaRbac** -- Package for the Laravel 5 framework with [AdminLTE](https://github.com/jeroennoten/Laravel-AdminLTE) template, which provides management with the next data:
+## 1 Introduction
+
+**LaRbac** - Package for the Laravel framework which provides management with the next data:
 - Roles
 - Permissions
 - Assign roles for users
 
-2 Dependencies
-----------------------------
+![RBAC package structure](https://github.com/itstructure/laravel-rbac/blob/master/laravel_rbac_structure_en.jpg)
 
-- php >= 7.1
+## 2 Dependencies
+
+- laravel 6+ | 7+
+- Bootstrap 4 for styling
+- JQuery
+- php >= 7.2.0
 - composer
-- MySql >= 5.5
-- Laravel >= 5.1.12
 
-3 Installation
-----------------------------
+## 3 Installation
 
 ### 3.1 General installation from remote repository
 
-Via composer:
+Run the composer command:
 
-```composer require "itstructure/laravel-rbac": "^1.1.1"```
-
-or in section **require** of composer.json file set the following:
-```
-"require": {
-    "itstructure/laravel-rbac": "^1.1.1"
-}
-```
-and command ```composer install```, if you install laravel project extensions first,
-
-or command ```composer update```, if all laravel project extensions are already installed.
+`composer require itstructure/laravel-rbac "~2.0.0"`
 
 ### 3.2 If you are testing this package from local server directory
 
-In application ```composer.json``` file set the repository, like in example:
+In application `composer.json` file set the repository, as in example:
 
-```
+```json
 "repositories": [
     {
         "type": "path",
@@ -58,83 +47,147 @@ In application ```composer.json``` file set the repository, like in example:
 
 Here,
 
-**laravel-rbac** - directory name, which hase the same directory level like application and contains LaRbac package.
+**../laravel-rbac** - directory name, which has the same directory level as your project application and contains LaRbac package.
 
 Then run command:
 
-```composer require itstructure/laravel-rbac:dev-master --prefer-source```
+`composer require itstructure/laravel-rbac:dev-master --prefer-source`
 
 ### 3.3 App config
 
-Add to application ```config/app.php``` file to section **providers**: ```Itstructure\LaRbac\RbacServiceProvider::class```
+Add to application `config/app.php` file to section **providers**:
+
+```php
+Itstructure\LaRbac\RbacServiceProvider::class,
+```
 
 ### 3.4 Next internal installation steps
 
-1. Run command to publish files of dependency packages and LaRbac package:
+**Notes:**
 
-    ```php artisan rbac:install```
+- Make sure that a table for the users is already existing in your project.
+
+- Make sure that a model for the users table is already existing in your project.
+
+Let's go:
+
+1. Publish files.
+
+    **Note:** `rbac.php` config file and seeders `LaRbacDatabaseSeeder`, `PermissionSeeder`, `RoleSeeder` must be published surely!
+
+    - To publish config run command:
     
-2. Configure published ```config/rbac.php``` file:
+        `php artisan rbac:publish --only=config`
+        
+        It stores config file to `config` folder.
+        
+    - To publish seeders run command:
+        
+        `php artisan rbac:publish --only=seeds`
+        
+        It stores seeder files to `database/seeds` folder.
+        
+    - To publish migrations run command:
+            
+        `php artisan rbac:publish --only=migrations`
+        
+        It stores migration files to `database/migrations` folder.
+            
+    - To publish views run command:
+                
+        `php artisan rbac:publish --only=views`
+        
+        It stores view files to `resources/views/vendor/rbac` folder.
+        
+    - To publish translations run command:
+                    
+        `php artisan rbac:publish --only=lang`
+        
+        It stores translation files to `resources/lang/vendor/rbac` folder.
+        
+    - To publish all parts run command without `only` argument:
     
-    change ```userModelClass``` if it is needed;
+        `php artisan rbac:publish`
+        
+    Else you can use `--force` argument to rewrite already published files.
     
-    set ```adminUserId``` which you wanted to be with the role of administrator;
+2. Configure published `config/rbac.php` file:
+
+    - set `layout`. Example: `'layout' => 'adminlte::page'`
+    
+    - change `userModelClass` if it is needed to change
+    
+    - set `adminUserId` which you wanted to be with the role of administrator. **At least at the beginning stage**.
+    
+        It is necessary for the next time system to let you go into the Rbac control panel, after you assigned an administrator role for you (Later see point **4**).
+        
+    - Most likely you have to change `memberNameAttributeKey`.
+    
+        It is to display the user name in control panel by `getMemberNameAttribute()` method of `Administrable` trait. It can be **string** or a **callback**:
+    
+        ```php
+        'memberNameAttributeKey' => function ($row) {
+            return $row->first_name . ' ' . $row->last_name;
+        }
+        ```
     
 3. Run command to run migrations and seeds:
 
-    ```php artisan rbac:database```
+    `php artisan rbac:database`
     
-4. Run command to set Admin role for user with identifier, defined in 2 point:
-
-    ```php artisan rbac:admin```
+    Or optional:
     
-5. Do not forget to configure the package AdminLTE. For that there are: published ```config/adminlte.php``` file, templates in ```resources/views/vendor/adminlte```, and another data.
-See [AdminLTE](https://github.com/jeroennoten/Laravel-AdminLTE).
+    To run just migrations `php artisan rbac:database --only=migrate`
+    
+    To run just seeds `php artisan rbac:database --only=seed`
+    
+    - Alternative variant for seeders.
+    
+        You can set published rbac `LaRbacDatabaseSeeder` seeder class in to a special `DatabaseSeeder`:
+            
+        ```php
+        use Illuminate\Database\Seeder;
+        ```
+        
+        ```php
+        class DatabaseSeeder extends Seeder
+        {
+            public function run()
+            {
+                $this->call(LaRbacDatabaseSeeder::class);
+            }
+        }
+        ```
+        
+        and run command: `php artisan db:seed`.
+    
+4. Run command to set Admin role for user with identifier `adminUserId`, defined in **2** point:
 
-4 Configuration recommendations
-----------------------------
+    `php artisan rbac:admin`
 
-### 4.1 AdminLTE
+## 4 Usage
 
-Menu config example according with the LaRbac routes:
+**Notes**:
 
-```php
-'menu' => [
-    'MAIN NAVIGATION',
-    [
-        'text' => 'Roles',
-        'icon' => 'fa fa-user-circle-o',
-        'url'  => '/rbac/roles',
-    ],
-    [
-        'text' => 'Permissions',
-        'icon' => 'fa fa-user-secret',
-        'url'  => '/rbac/permissions',
-    ],
-    [
-        'text' => 'Users',
-        'icon' => 'fa fa-users',
-        'url'  => '/rbac/users',
-    ],
-],
-```
+- Make sure you use a **Bootstrap 4** for styling and **JQuery** in your application.
 
-### 4.2 User application model
+- Make sure that a laravel initial factory authorization is already working in your application.
 
-According with the ```Itstructure\LaRbac\Contracts\User``` use functions from ```Itstructure\LaRbac\Models\Administrable``` trait like in example:
+### 4.1 Model part
+
+According with the `Itstructure\LaRbac\Interfaces\RbacUserInterface` use functions from `Itstructure\LaRbac\Traits\Administrable` trait as in example:
 
 ```php
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Itstructure\LaRbac\Contracts\User as RbacUserContract;
-use Itstructure\LaRbac\Models\Role;
-use Itstructure\LaRbac\Models\Administrable;
+use Itstructure\LaRbac\Interfaces\RbacUserInterface;
+use Itstructure\LaRbac\Traits\Administrable;
 ```
 
 ```php
-class User extends Authenticatable implements RbacUserContract
+class User extends Authenticatable implements RbacUserInterface
 {
     use Notifiable, Administrable;
 
@@ -148,9 +201,79 @@ class User extends Authenticatable implements RbacUserContract
 }
 ```
 
-License
-----------------------------
+### 4.2 Routes part
 
-Copyright © 2018 Andrey Girnik girnikandrey@gmail.com.
+There are already integrated base RBAC routes to manage **users**, **roles** and **permissions**. See in `routes.php` package file.
+
+They are guarded by the next:
+
+- middleware `auth`
+- permission `can:administrate` (editable by config).
+
+This routes allow you to go to the next routes:
+
+- **Users section**
+
+    For get request method
+
+    - `http://example-domain.com/rbac/users`
+    - `http://example-domain.com/rbac/users/show/{id}`
+    - `http://example-domain.com/rbac/users/edit/{id}`
+
+    For post request method
+
+    - `http://example-domain.com/rbac/users/update/{id}`
+    - `http://example-domain.com/rbac/users/delete`
+    
+- **Roles section**
+
+    For get request method
+
+    - `http://example-domain.com/rbac/roles`
+    - `http://example-domain.com/rbac/roles/show/{id}`
+    - `http://example-domain.com/rbac/roles/create`
+    - `http://example-domain.com/rbac/roles/edit/{role}`
+
+    For post request method
+
+    - `http://example-domain.com/rbac/roles/store`
+    - `http://example-domain.com/rbac/roles/update/{role}`
+    - `http://example-domain.com/rbac/roles/delete`
+    
+- **Permissions section**
+
+    For get request method
+
+    - `http://example-domain.com/rbac/permissions`
+    - `http://example-domain.com/rbac/permissions/show/{id}`
+    - `http://example-domain.com/rbac/permissions/create`
+    - `http://example-domain.com/rbac/permissions/edit/{permission}`
+
+    For post request method
+
+    - `http://example-domain.com/rbac/permissions/store`
+    - `http://example-domain.com/rbac/permissions/update/{permission}`
+    - `http://example-domain.com/rbac/permissions/delete`
+
+### 4.3 Gates part
+
+There are already integrated base RBAC gates to access control in your application to some of the resources. See provider file `RbacAuthServiceProvider.php`.
+
+It provides the next gate definitions:
+
+- `administrate`
+- `assign-role`
+- `delete-member`
+- `view-record`
+- `create-record`
+- `update-record`
+- `delete-record`
+- `publish-record`
+
+Read more in [Laravel gates](https://laravel.com/docs/7.x/authorization#gates)
+
+## License
+
+Copyright © 2018-2020 Andrey Girnik girnikandrey@gmail.com.
 
 Licensed under the [MIT license](http://opensource.org/licenses/MIT). See LICENSE.txt for details.

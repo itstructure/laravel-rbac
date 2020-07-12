@@ -20,7 +20,7 @@ class StorePermission extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return !empty(config('rbac.routesMainPermission')) ? $this->user()->can(config('rbac.routesMainPermission')) : true;
     }
 
     /**
@@ -31,8 +31,38 @@ class StorePermission extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3|max:191|unique:roles',
-            'description' => 'required|string|min:3|max:191|unique:roles',
+            'name' => 'required|string|regex:/^[\w\s\-]+$/|min:3|max:191|unique:permissions',
+            'description' => 'required|string|min:3|max:191|unique:permissions',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required' => __('rbac::validation.required'),
+            'string' => __('rbac::validation.string'),
+            'regex' => __('rbac::validation.regex'),
+            'min' => __('rbac::validation.min'),
+            'max' => __('rbac::validation.max'),
+            'unique' => __('rbac::validation.unique'),
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => __('rbac::main.name'),
+            'description' => __('rbac::main.description'),
         ];
     }
 }

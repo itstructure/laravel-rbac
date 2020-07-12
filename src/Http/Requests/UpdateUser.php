@@ -20,7 +20,7 @@ class UpdateUser extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return !empty(config('rbac.routesMainPermission')) ? $this->user()->can(config('rbac.routesMainPermission')) : true;
     }
 
     /**
@@ -32,6 +32,30 @@ class UpdateUser extends FormRequest
     {
         return [
             'roles' => 'required|array',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required' => __('rbac::validation.required'),
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'roles' => __('rbac::roles.roles')
         ];
     }
 }

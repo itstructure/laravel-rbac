@@ -2,9 +2,11 @@
 
 namespace Itstructure\LaRbac\Commands;
 
+use Illuminate\Foundation\Auth\User as ParentUser;
 use Illuminate\Console\Command;
 use Itstructure\LaRbac\Models\Role;
 use Itstructure\LaRbac\Helpers\Helper;
+use Itstructure\LaRbac\Interfaces\RbacUserInterface;
 
 /**
  * Class AdminCommand
@@ -17,75 +19,63 @@ class AdminCommand extends Command
 {
     /**
      * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'rbac:admin';
 
     /**
      * The console command description.
-     *
      * @var string
      */
-    protected $description = 'Assign Admin role for existing special user';
+    protected $description = 'Assign Admin role for existing special user.';
 
     /**
-     * Execute the console command.
-     *
-     * @return void
+     * @var RbacUserInterface|ParentUser
      */
-    public function handle()
+    protected $userModelClass;
+
+    /**
+     * @var int
+     */
+    protected $adminUserId;
+
+    /**
+     * AdminCommand constructor.
+     */
+    public function __construct()
     {
-        $this->info('1. Assign Admin role for existing special user');
-        if ($this->assignAdminRole()) {
-            $this->info('Admin role is assigned successfully.');
-        } else {
-            $this->info('Admin role is not assigned.');
-        }
+        parent::__construct();
+
+        $this->userModelClass = config('rbac.userModelClass');
+        $this->adminUserId = config('rbac.adminUserId');
     }
 
     /**
-     * Assign Admin role for existing special user (which adminUserId is set in config/rbac.php file).
-     *
-     * @return bool
+     * Execute the console command.
      */
-    private function assignAdminRole(): bool
+    public function handle()
     {
-        $userModelClass = config('rbac.userModelClass');
+        try {
+            $this->info('Start assign admin role for existing special user.');
 
-        if (!Helper::checkUserContract($userModelClass)) {
-            $this->info(Helper::contractErrorMessage());
-            return false;
+            Helper::checkUserModel($this->userModelClass);
+
+            Helper::checkAdminUserId($this->adminUserId);
+
+            $adminUser = Helper::retrieveUserModel($this->userModelClass, $this->adminUserId);
+
+            $adminRoleId = Role::where('slug', Role::ADMIN_ROLE)->firstOrFail()->id;
+
+            /** @var RbacUserInterface $adminUser */
+            $adminUser->roles()->attach([
+                $adminRoleId
+            ]);
+
+            $this->info('Admin role is assigned successfully.');
+
+        } catch (\Exception $e) {
+            $this->error('Failed!');
+            $this->error($e->getMessage());
         }
-
-        if (!Helper::checkUserParent($userModelClass)) {
-            $this->info(Helper::parentErrorMessage());
-            return false;
-        }
-
-        $adminUserId = config('rbac.adminUserId');
-
-        if (!$adminUserId || !is_int($adminUserId)) {
-            $this->info('Identifier of desired Admin user is not defined in config file.');
-            return false;
-        }
-
-        $adminUser = call_user_func([
-            $userModelClass,
-            'findOrFail',
-        ], $adminUserId);
-
-        if (!$adminUser) {
-            $this->info('There is no user with such id: '.$adminUserId.'.');
-            return false;
-        }
-
-        $adminRoleId = Role::where('slug', Role::ADMIN_ROLE)->firstOrFail()->id;
-
-        $adminUser->roles()->attach([
-            $adminRoleId
-        ]);
-
-        return true;
     }
 }
