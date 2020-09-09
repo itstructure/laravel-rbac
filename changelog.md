@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**2.0.1 September 9, 2020:**
+- Add comments for 2.x version, which is for Laravel 6 or 7.
+
 **2.0.0 July 12, 2020:**
 - Total package reconstruction.
 

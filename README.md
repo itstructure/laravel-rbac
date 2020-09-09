@@ -26,34 +26,15 @@
 
 ## 3 Installation
 
+**Note:** Version **2.x** is just for laravel **6** or **7**.
+
 ### 3.1 General installation from remote repository
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "~2.0.0"`
+`composer require itstructure/laravel-rbac "~2.0.1"`
 
-### 3.2 If you are testing this package from local server directory
-
-In application `composer.json` file set the repository, as in example:
-
-```json
-"repositories": [
-    {
-        "type": "path",
-        "url": "../laravel-rbac"
-    }
-],
-```
-
-Here,
-
-**../laravel-rbac** - directory name, which has the same directory level as your project application and contains LaRbac package.
-
-Then run command:
-
-`composer require itstructure/laravel-rbac:dev-master --prefer-source`
-
-### 3.3 App config
+### 3.2 App config
 
 Add to application `config/app.php` file to section **providers**:
 
@@ -61,7 +42,7 @@ Add to application `config/app.php` file to section **providers**:
 Itstructure\LaRbac\RbacServiceProvider::class,
 ```
 
-### 3.4 Next internal installation steps
+### 3.3 Next internal installation steps
 
 **Notes:**
 
