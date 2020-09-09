@@ -21,7 +21,7 @@ class PublishCommand extends Command
      */
     protected $signature = 'rbac:publish '.
     '{--force : Overwrite existing files by default. This option can not be used.}'.
-    '{--only= : Publish only specific part. Available parts: config, views, lang, migrations, seeds. This option can not be used.}';
+    '{--only= : Publish only specific part. Available parts: config, views, lang, migrations, seeders. This option can not be used.}';
 
     /**
      * The console command description.
@@ -64,9 +64,9 @@ class PublishCommand extends Command
                     $dumpAutoload = true;
                     break;
 
-                case 'seeds':
-                    $this->info('Publish just a part: seeds.');
-                    $callArguments['--tag'] = 'seeds';
+                case 'seeders':
+                    $this->info('Publish just a part: seeders.');
+                    $callArguments['--tag'] = 'seeders';
                     $dumpAutoload = true;
                     break;
 
@@ -77,7 +77,7 @@ class PublishCommand extends Command
             }
 
         } else {
-            $this->info('Publish all parts: config, views, lang, migrations, seeds.');
+            $this->info('Publish all parts: config, views, lang, migrations, seeders.');
             $dumpAutoload = true;
         }
 

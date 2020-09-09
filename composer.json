@@ -15,13 +15,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "laravel/framework": "^6.0|^7.0",
-        "php": ">=7.2.0",
-        "itstructure/laravel-grid-view": "~1.0.4"
+        "laravel/framework": "^8.0",
+        "php": ">=7.3.0",
+        "itstructure/laravel-grid-view": "~1.0.5"
     },
     "classmap": [
         "database/migrations",
-        "database/seeds",
+        "database/seeders",
         "src/Models",
         "src/Http/Requests",
         "src/Http/Controllers"

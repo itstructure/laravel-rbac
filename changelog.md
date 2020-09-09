@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.0 September 10, 2020:**
+- Set compatibility for Laravel 8.
+
 **2.0.1 September 9, 2020:**
 - Add comments for 2.x version, which is for Laravel 6 or 7.
 

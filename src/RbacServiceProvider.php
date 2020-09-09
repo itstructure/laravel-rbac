@@ -39,7 +39,7 @@ class RbacServiceProvider extends ServiceProvider
         $this->publishViews();
         $this->publishTranslations();
         $this->publishMigrations();
-        $this->publishSeeds();
+        $this->publishSeeders();
 
 
         // Global view's params
@@ -155,14 +155,14 @@ class RbacServiceProvider extends ServiceProvider
     }
 
     /**
-     * Publish seeds.
+     * Publish seeders.
      * @return void
      */
-    private function publishSeeds(): void
+    private function publishSeeders(): void
     {
         $this->publishes([
-            $this->packagePath('database/seeds') => database_path('seeds'),
-        ], 'seeds');
+            $this->packagePath('database/seeders') => database_path('seeders'),
+        ], 'seeders');
     }
 
 

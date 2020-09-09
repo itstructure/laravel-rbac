@@ -18,21 +18,25 @@
 
 ## 2 Dependencies
 
-- laravel 6+ | 7+
+- laravel 8+
 - Bootstrap 4 for styling
 - JQuery
-- php >= 7.2.0
+- php >= 7.3.0
 - composer
 
 ## 3 Installation
 
-**Note:** Version **2.x** is just for laravel **6** or **7**.
+**Note!**
+
+Version **3.x** is for laravel **8**.
+
+Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rbac` with **2.x** versions.
 
 ### 3.1 General installation from remote repository
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "~2.0.1"`
+`composer require itstructure/laravel-rbac "~3.0.0"`
 
 ### 3.2 App config
 
@@ -64,9 +68,9 @@ Let's go:
         
     - To publish seeders run command:
         
-        `php artisan rbac:publish --only=seeds`
+        `php artisan rbac:publish --only=seeders`
         
-        It stores seeder files to `database/seeds` folder.
+        It stores seeder files to `database/seeders` folder.
         
     - To publish migrations run command:
             
@@ -112,7 +116,7 @@ Let's go:
         }
         ```
     
-3. Run command to run migrations and seeds:
+3. Run command to run migrations and seeders:
 
     `php artisan rbac:database`
     
@@ -188,7 +192,7 @@ There are already integrated base RBAC routes to manage **users**, **roles** and
 
 They are guarded by the next:
 
-- middleware `auth`
+- middleware `auth` (editable by config).
 - permission `can:administrate` (editable by config).
 
 This routes allow you to go to the next routes:
@@ -251,7 +255,7 @@ It provides the next gate definitions:
 - `delete-record`
 - `publish-record`
 
-Read more in [Laravel gates](https://laravel.com/docs/7.x/authorization#gates)
+Read more in [Laravel gates](https://laravel.com/docs/8.x/authorization#gates)
 
 ## License
 
