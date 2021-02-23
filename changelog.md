@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.1 February 23, 2021:**
+- Upgrade copyright year.
+
 **3.0.0 September 10, 2020:**
 - Set compatibility for Laravel 8.
 
