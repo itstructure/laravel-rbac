@@ -2,6 +2,7 @@
 
 **3.0.2 April 22, 2021:**
 - Update requirement of **grid view** package to ~1.0.6.
+- Add scrutinizer build option.
 
 **3.0.1 February 23, 2021:**
 - Upgrade copyright year.
