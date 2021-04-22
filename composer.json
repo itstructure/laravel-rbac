@@ -17,7 +17,7 @@
     "require": {
         "laravel/framework": "^8.0",
         "php": ">=7.3.0",
-        "itstructure/laravel-grid-view": "~1.0.6"
+        "itstructure/laravel-grid-view": "~1.0.7"
     },
     "classmap": [
         "database/migrations",

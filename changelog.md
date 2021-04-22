@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.3 April 22, 2021:**
+- Update requirement of **grid view** package to ~1.0.7.
+
 **3.0.2 April 22, 2021:**
 - Update requirement of **grid view** package to ~1.0.6.
 - Add scrutinizer build option.
