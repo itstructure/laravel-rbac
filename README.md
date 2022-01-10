@@ -36,7 +36,7 @@ Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rba
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "~3.0.3"`
+`composer require itstructure/laravel-rbac "~3.0.4"`
 
 ### 3.2 App config
 
@@ -259,6 +259,6 @@ Read more in [Laravel gates](https://laravel.com/docs/8.x/authorization#gates)
 
 ## License
 
-Copyright © 2018-2021 Andrey Girnik girnikandrey@gmail.com.
+Copyright © 2018-2022 Andrey Girnik girnikandrey@gmail.com.
 
 Licensed under the [MIT license](http://opensource.org/licenses/MIT). See LICENSE.txt for details.

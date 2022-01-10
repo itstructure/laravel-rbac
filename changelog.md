@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.4 January 10, 2022:**
+- Readme fixes. Copyright year.
+
 **3.0.3 April 22, 2021:**
 - Update requirement of **grid view** package to ~1.0.7.
 
