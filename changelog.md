@@ -1,5 +1,9 @@
 ### CHANGE LOG:
 
+**3.0.5 March 6, 2022:**
+- Add support for Laravel 9.
+- Add view examples.
+
 **3.0.4 January 10, 2022:**
 - Readme fixes. Copyright year.
 

@@ -18,7 +18,7 @@
 
 ## 2 Dependencies
 
-- laravel 8+
+- laravel 8+ | 9+
 - Bootstrap 4 for styling
 - JQuery
 - php >= 7.3.0
@@ -28,7 +28,7 @@
 
 **Note!**
 
-Version **3.x** is for laravel **8**.
+Version **3.x** is for laravel **8+**.
 
 Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rbac` with **2.x** versions.
 
@@ -36,7 +36,7 @@ Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rba
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "~3.0.4"`
+`composer require itstructure/laravel-rbac "~3.0.5"`
 
 ### 3.2 App config
 
@@ -255,7 +255,21 @@ It provides the next gate definitions:
 - `delete-record`
 - `publish-record`
 
-Read more in [Laravel gates](https://laravel.com/docs/8.x/authorization#gates)
+Read more in [Laravel gates](https://laravel.com/docs/9.x/authorization#gates)
+
+## 5 View examples
+
+**Users**
+
+![RBAC package structure](https://github.com/itstructure/laravel-rbac/blob/master/laravel_rbac_users_en.JPG)
+
+**Roles**
+
+![RBAC package structure](https://github.com/itstructure/laravel-rbac/blob/master/laravel_rbac_roles_en.JPG)
+
+**Permissions**
+
+![RBAC package structure](https://github.com/itstructure/laravel-rbac/blob/master/laravel_rbac_permissions_en.JPG)
 
 ## License
 
