@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.6 March 22, 2022:**
+- Recommendation about AdminLTE layout installation.
+
 **3.0.5 March 6, 2022:**
 - Add support for Laravel 9.
 - Add view examples.

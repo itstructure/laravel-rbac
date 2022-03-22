@@ -36,7 +36,7 @@ Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rba
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "~3.0.5"`
+`composer require itstructure/laravel-rbac "~3.0.6"`
 
 ### 3.2 App config
 
@@ -53,6 +53,12 @@ Itstructure\LaRbac\RbacServiceProvider::class,
 - Make sure that a table for the users is already existing in your project.
 
 - Make sure that a model for the users table is already existing in your project.
+
+**Recommendation:**
+
+If you don't have any layout yet, it is useful to install for example [AdminLTE](https://github.com/jeroennoten/Laravel-AdminLTE) 
+or you can make your special any layout template. 
+Cause in this package there is no a layout specially. But in config it is necessary to set it (see the next point 2 about a configure).
 
 Let's go:
 
