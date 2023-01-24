@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.7 January 24, 2023:**
+- Update copyright year and Readme.
+
 **3.0.6 March 22, 2022:**
 - Recommendation about AdminLTE layout installation.
 
