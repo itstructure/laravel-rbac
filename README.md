@@ -18,7 +18,7 @@
 
 ## 2 Dependencies
 
-- laravel 8+ | 9+
+- laravel 8+ | 9+ | 10+
 - Bootstrap 4 for styling
 - JQuery
 - php >= 7.3.0
@@ -28,7 +28,7 @@
 
 **Note!**
 
-Version **3.x** is for laravel **8+** and higher.
+Version **3.x** is for laravel **8+**, **9+**, **10+**.
 
 Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rbac` with **2.x** versions.
 
@@ -36,7 +36,7 @@ Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rba
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "~3.0.7"`
+`composer require itstructure/laravel-rbac "~3.0.8"`
 
 ### 3.2 App config
 
