@@ -9,7 +9,6 @@ use Itstructure\LaRbac\Http\Requests\{
     Delete as DeletePermissionRequest
 };
 use Itstructure\GridView\DataProviders\EloquentDataProvider;
-use App\Http\Controllers\Controller;
 
 /**
  * Class PermissionController

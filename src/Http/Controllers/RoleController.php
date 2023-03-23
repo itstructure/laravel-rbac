@@ -9,7 +9,6 @@ use Itstructure\LaRbac\Http\Requests\{
     Delete as DeleteRoleRequest
 };
 use Itstructure\GridView\DataProviders\EloquentDataProvider;
-use App\Http\Controllers\Controller;
 
 /**
  * Class RoleController

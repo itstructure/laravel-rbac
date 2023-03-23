@@ -36,7 +36,7 @@ Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rba
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "~3.0.8"`
+`composer require itstructure/laravel-rbac "~3.0.9"`
 
 ### 3.2 App config
 

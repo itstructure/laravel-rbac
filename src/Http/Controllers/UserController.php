@@ -10,7 +10,6 @@ use Itstructure\LaRbac\Http\Requests\{
     Delete as DeleteUserRequest
 };
 use Itstructure\GridView\DataProviders\EloquentDataProvider;
-use App\Http\Controllers\Controller;
 
 /**
  * Class UserController

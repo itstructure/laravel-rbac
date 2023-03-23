@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.9 March 24, 2023:**
+- Improve code. Add base Controller.
+
 **3.0.8 February 18, 2023:**
 - Add support for Laravel 10.
 
