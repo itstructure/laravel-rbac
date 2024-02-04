@@ -1,5 +1,9 @@
 ### CHANGE LOG:
 
+**3.0.10 February 04, 2024:**
+- Update copyright year and Readme.
+- Require Laravel Grid View ~1.1.0.
+
 **3.0.9 March 24, 2023:**
 - Improve code. Add base Controller.
 
