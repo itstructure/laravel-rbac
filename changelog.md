@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.11 February 04, 2024:**
+- Change dependence on Laravel Grid View.
+
 **3.0.10 February 04, 2024:**
 - Update copyright year and Readme.
 - Require Laravel Grid View ~1.1.0.
