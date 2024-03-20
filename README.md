@@ -18,7 +18,7 @@
 
 ## 2 Dependencies
 
-- laravel 8+ | 9+ | 10+
+- laravel 8+ | 9+ | 10+ | 11+
 - Bootstrap 4 for styling
 - JQuery
 - php >= 7.3.0
@@ -28,7 +28,7 @@
 
 **Note!**
 
-Version **3.x** is for laravel **8+**, **9+**, **10+**.
+Version **3.x** is for laravel **8+**, **9+**, **10+**, **11+**.
 
 Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rbac` with **2.x** versions.
 
@@ -36,17 +36,9 @@ Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rba
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "~3.0.11"`
+`composer require itstructure/laravel-rbac "~3.0.12"`
 
-### 3.2 App config
-
-Add to application `config/app.php` file to section **providers**:
-
-```php
-Itstructure\LaRbac\RbacServiceProvider::class,
-```
-
-### 3.3 Next internal installation steps
+### 3.2 Next internal installation steps
 
 **Notes:**
 

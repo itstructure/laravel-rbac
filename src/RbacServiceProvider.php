@@ -60,9 +60,9 @@ class RbacServiceProvider extends ServiceProvider
      */
     private function registerCommands(): void
     {
-        $this->commands(Commands\PublishCommand::class);
-        $this->commands(Commands\DatabaseCommand::class);
-        $this->commands(Commands\AdminCommand::class);
+        $this->commands(PublishCommand::class);
+        $this->commands(DatabaseCommand::class);
+        $this->commands(AdminCommand::class);
     }
 
 

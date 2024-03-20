@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.12 March 20, 2024:**
+- Add support for Laravel 11.
+
 **3.0.11 February 04, 2024:**
 - Change dependence on Laravel Grid View.
 
