@@ -21,7 +21,7 @@ class PublishCommand extends Command
      */
     protected $signature = 'rbac:publish '.
     '{--force : Overwrite existing files by default.}'.
-    '{--only= : Publish only specific part. Available parts: config, views, lang, migrations, seeders. This option can not be used.}';
+    '{--only= : Publish only specific part. Available parts: config, views, lang, migrations, seeders.}';
 
     /**
      * The console command description.

@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.14 July 14, 2024:**
+- Small text fix.
+
 **3.0.13 July 14, 2024:**
 - Small fix for describing text in Commands classes.
 

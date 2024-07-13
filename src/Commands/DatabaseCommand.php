@@ -19,7 +19,7 @@ class DatabaseCommand extends Command
      */
     protected $signature = 'rbac:database '.
     '{--force : Overwrite existing files by default.}'.
-    '{--only= : Run only specific process. Available values: migrate, seed. This option can not be used.}';
+    '{--only= : Run only specific process. Available values: migrate, seed.}';
 
     /**
      * The console command description.
