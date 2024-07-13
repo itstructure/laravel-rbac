@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.13 July 14, 2024:**
+- Small fix for describing text in Commands classes.
+
 **3.0.12 March 20, 2024:**
 - Add support for Laravel 11.
 

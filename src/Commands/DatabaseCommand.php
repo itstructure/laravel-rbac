@@ -18,7 +18,7 @@ class DatabaseCommand extends Command
      * @var string
      */
     protected $signature = 'rbac:database '.
-    '{--force : Overwrite existing views by default. This option can not be used.}'.
+    '{--force : Overwrite existing files by default.}'.
     '{--only= : Run only specific process. Available values: migrate, seed. This option can not be used.}';
 
     /**
