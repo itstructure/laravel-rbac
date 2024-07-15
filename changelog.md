@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.15 July 15, 2024:**
+- Fix README and dependency on grid view package to `^1.1.4`.
+
 **3.0.14 July 14, 2024:**
 - Small text fix.
 
