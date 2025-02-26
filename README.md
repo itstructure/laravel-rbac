@@ -18,7 +18,7 @@
 
 ## 2 Dependencies
 
-- laravel 8+ | 9+ | 10+ | 11+
+- laravel 8+ | 9+ | 10+ | 11+ | 12+
 - Bootstrap 4 for styling
 - JQuery
 - php >= 7.3.0
@@ -36,7 +36,7 @@ Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rba
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "^3.0.15"`
+`composer require itstructure/laravel-rbac "^3.0.16"`
 
 ### 3.2 Next internal installation steps
 

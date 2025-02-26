@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.16 February 26, 2025:**
+- Add Laravel 12 support.
+
 **3.0.15 July 15, 2024:**
 - Fix README and dependency on grid view package to `^1.1.4`.
 
