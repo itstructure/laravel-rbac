@@ -28,7 +28,7 @@
 
 **Note!**
 
-Version **3.x** is for laravel **8+**, **9+**, **10+**, **11+**.
+Version **3.x** is for laravel **8+**, **9+**, **10+**, **11+**, **12+**.
 
 Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rbac` with **2.x** versions.
 
@@ -36,7 +36,7 @@ Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rba
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "^3.0.16"`
+`composer require itstructure/laravel-rbac "^3.0.17"`
 
 ### 3.2 Next internal installation steps
 
@@ -271,6 +271,6 @@ Read more in [Laravel gates](https://laravel.com/docs/9.x/authorization#gates)
 
 ## License
 
-Copyright © 2018-2024 Andrey Girnik girnikandrey@gmail.com.
+Copyright © 2018-2025 Andrey Girnik girnikandrey@gmail.com.
 
 Licensed under the [MIT license](http://opensource.org/licenses/MIT). See LICENSE.txt for details.
