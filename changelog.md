@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.18 February 28, 2025:**
+- Describe `User` model tuning.
+
 **3.0.17 February 28, 2025:**
 - Fix grid view composer dependency. Fix README.
 

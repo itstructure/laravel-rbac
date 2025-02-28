@@ -36,7 +36,7 @@ Version **2.x** is for laravel **6** or **7**. You can use branch `laravel67-rba
 
 Run the composer command:
 
-`composer require itstructure/laravel-rbac "^3.0.17"`
+`composer require itstructure/laravel-rbac "^3.0.18"`
 
 ### 3.2 Next internal installation steps
 
@@ -114,7 +114,15 @@ Let's go:
         }
         ```
     
-3. Run command to run migrations and seeders:
+3. Tuning your `User` model (as shown in **4.1** point):
+
+    - Implement `User` model from `RbacUserInterface`.
+   
+    - Add **roles** attribute to `$fillable`.
+   
+    - Apply `Administrable` trait.
+
+4. Run command to run migrations and seeders:
 
     `php artisan rbac:database`
     
@@ -144,7 +152,7 @@ Let's go:
         
         and run command: `php artisan db:seed`.
     
-4. Run command to set Admin role for user with identifier `adminUserId`, defined in **2** point:
+5. Run command to set Admin role for user with identifier `adminUserId`, defined in **2** point:
 
     `php artisan rbac:admin`
 
