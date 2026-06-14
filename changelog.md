@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.19 June 14, 2026:**
+- Add Laravel 13 support.
+
 **3.0.18 February 28, 2025:**
 - Describe `User` model tuning.
 

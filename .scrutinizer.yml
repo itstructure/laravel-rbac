@@ -1,4 +1,20 @@
 build:
+  #image: default-bionic
+
+  environment:
+    php: 8.3.0
+
+  dependencies:
+    before:
+      # Download and verify latest Composer installer. See more https://getcomposer.org/download
+      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      - php -r "if (hash_file('sha384', 'composer-setup.php') === 'c8b085408188070d5f52bcfe4ecfbee5f727afa458b2573b8eaaf77b3419b0bf2768dc67c86944da1544f06fa544fd47') { echo 'Installer verified'.PHP_EOL; } else { echo 'Installer corrupt'.PHP_EOL; unlink('composer-setup.php'); exit(1); }"
+      - php composer-setup.php --install-dir=$HOME/bin --filename=composer
+      - php -r "unlink('composer-setup.php');"
+      - $HOME/bin/composer --version
+    override:
+      - $HOME/bin/composer install --no-interaction --optimize-autoloader
+
   nodes:
     analysis:
       tests:
@@ -14,5 +30,5 @@ filter:
   excluded_paths:
     - vendor/*
 
-before_commands:
-  - "composer install --prefer-source"
+#before_commands:
+#  - "composer install --prefer-source"
