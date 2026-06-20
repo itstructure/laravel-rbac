@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.20 June 20, 2026:**
+- Solve issue for php 8.4+ when implicitly marking parameter as nullable is deprecated.
+
 **3.0.19 June 14, 2026:**
 - Add Laravel 13 support.
 

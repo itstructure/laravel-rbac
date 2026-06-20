@@ -57,7 +57,7 @@ class RbacAuthServiceProvider extends AuthServiceProvider
         | Record section for application.
         |--------------------------------------------------------------------------
         */
-        Gate::define(Permission::VIEW_RECORD_PERMISSION, function (RbacUserInterface $user, RbacModelInterface $model = null) {
+        Gate::define(Permission::VIEW_RECORD_PERMISSION, function (RbacUserInterface $user, ?RbacModelInterface $model = null) {
             return $user->hasAccess([
                 Permission::VIEW_RECORD_PERMISSION
             ]) || !empty($model) ? $user->getMemberKeyAttribute() == $model->getAuthorIdAttribute() : false;
@@ -69,13 +69,13 @@ class RbacAuthServiceProvider extends AuthServiceProvider
             ]);
         });
 
-        Gate::define(Permission::UPDATE_RECORD_PERMISSION, function (RbacUserInterface $user, RbacModelInterface $model = null) {
+        Gate::define(Permission::UPDATE_RECORD_PERMISSION, function (RbacUserInterface $user, ?RbacModelInterface $model = null) {
             return $user->hasAccess([
                 Permission::UPDATE_RECORD_PERMISSION
             ]) || !empty($model) ? $user->getMemberKeyAttribute() == $model->getAuthorIdAttribute() : false;
         });
 
-        Gate::define(Permission::DELETE_RECORD_PERMISSION, function (RbacUserInterface $user, RbacModelInterface $model = null) {
+        Gate::define(Permission::DELETE_RECORD_PERMISSION, function (RbacUserInterface $user, ?RbacModelInterface $model = null) {
             return $user->hasAccess([
                 Permission::DELETE_RECORD_PERMISSION
             ]) || !empty($model) ? $user->getMemberKeyAttribute() == $model->getAuthorIdAttribute() : false;

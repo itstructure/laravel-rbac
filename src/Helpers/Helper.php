@@ -20,7 +20,7 @@ class Helper
      * @param string|null $userModelClass
      * @throws Exception
      */
-    public static function checkUserModel(string $userModelClass = null)
+    public static function checkUserModel(?string $userModelClass = null)
     {
         if (empty($userModelClass)) {
             throw new Exception('User Model class is not defined in "rbac" config file.');
@@ -92,7 +92,7 @@ class Helper
      * @param int|null $adminUserId
      * @throws Exception
      */
-    public static function checkAdminUserId(int $adminUserId = null): void
+    public static function checkAdminUserId(?int $adminUserId = null): void
     {
         if (empty($adminUserId) || !is_int($adminUserId)) {
             throw new Exception('Identifier of a desired Admin user is not defined in "rbac" config file.');
